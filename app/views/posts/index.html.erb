@@ -1,0 +1,17 @@
+<h1>Posts</h1>
+
+<table>
+	<% @posts.each do |post| %>
+	<thead>
+		<th>Title</th>
+		<th>Body</th>
+	</thead>
+	<tbody>	
+		<tr>
+			<td><strong><%= post.title.capitalize %></strong></td>
+			<td><%= post.body %></td>
+			<td><%= link_to 'Edit', edit_post_path(post) %> <%= link_to 'Delete', post, method: :delete %></td>
+		</tr>
+	</tbody>
+	<% end %>
+</table>

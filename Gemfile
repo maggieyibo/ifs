@@ -48,5 +48,8 @@ group :development, :test do
   # Rspec to use as the testing tool
   gem 'rspec-rails'
 
+  # Faker is used to generate fake data to test the data model
+  gem 'faker'
+  
 end
 
