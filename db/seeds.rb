@@ -9,9 +9,12 @@
   Tag.create(name: Faker::Commerce.department)
 end
 
-# 10.times do
-#   p = Post.create(title: Faker::Company.bs, body: Faker::Hacker.say_something_smart)
-#   3.times do
-# 	Post_tag_weight.create(weight: rand(0..100))
-#   end
-# end
+10.times do
+  p = Post.create(title: Faker::Company.bs, body: Faker::Hacker.say_something_smart)
+  3.times do
+	w = PostTagWeight.create(weight: rand(0..100))
+	w.post = p
+	w.tag = Tag.all.sample
+	w.save
+  end
+end
