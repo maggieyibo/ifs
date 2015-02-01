@@ -6,5 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 10.times do
-  Post.create(title: Faker::Company.bs, body: Faker::Hacker.say_something_smart)
+  Tag.create(name: Faker::Commerce.department)
 end
+
+# 10.times do
+#   p = Post.create(title: Faker::Company.bs, body: Faker::Hacker.say_something_smart)
+#   3.times do
+# 	Post_tag_weight.create(weight: rand(0..100))
+#   end
+# end

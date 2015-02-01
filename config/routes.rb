@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
  
- resources :posts
+  resources :users
+  resources :posts do
+    resources :comments
+  end
+
+  resources :tags
 
 end
