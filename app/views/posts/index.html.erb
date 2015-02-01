@@ -10,6 +10,11 @@
 		<tr>
 			<td><strong><%= post.title.capitalize %></strong></td>
 			<td><%= post.body %></td>
+			<td><% post.post_tag_weights.each do |w| %>
+				<%= w.tag.name %> - 
+				<%= w.weight %><br>
+				<% end %>
+			</td>
 			<td><%= link_to 'Edit', edit_post_path(post) %> <%= link_to 'Delete', post, method: :delete %></td>
 		</tr>
 	</tbody>

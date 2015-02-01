@@ -14,7 +14,10 @@ end
   3.times do
 	w = PostTagWeight.create(weight: rand(0..100))
 	w.post = p
-	w.tag = Tag.all.sample
+	t = Tag.all.sample
+	w.tag = t
 	w.save
+	# p.tags << t
+	# p.save
   end
 end
