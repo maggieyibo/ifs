@@ -1,66 +1,76 @@
-// console.log(d3);
-// console.log("<%= 'erb' %>");
 
-// console.log('ifs.js.erb');
 
-var w = 500;
-var h = 100;
-var barPadding = 2;
+// basic, fake d3 force-layout
 
-var dataset = [
-  [5, 20], [480, 90], [250, 50], [100, 33], [330, 95],
-  [410, 12], [475, 44], [25, 67], [85, 21], [220, 88]
-];
+// set the dimensions of the svg
+var h = 500, w = 700;
 
+// set a color scale (look at color brewer for better selections)
+var color = d3.scale.category20();
+
+// create the empty svg
 var svg = d3.select("body")
-  .append("svg")
-  .attr("width", w)   
-  .attr("height", h);
+      .append("svg")
+      .attr("height",h)
+      .attr("width",w);
 
-console.log(
-svg.selectAll("circle")
-	.data(dataset)
-  .enter()
-  .append("circle")
-  .attr("cx", function(d) {
-    return d[0];
-  })
-  .attr("cy", function(d) {
-    return d[1];
-  })
-  .attr("r", function(d){
-    return Math.sqrt(h-d[1]);
-	})
-);
+// make some fake data
+var nodes = [];
+for (i=0;i<20;i++) {
+  nodes[i] = {};
+}
 
- 
-svg.selectAll("circle")
-  .data(dataset)
-  .enter()
-  .append("circle")
-  .attr("cx", function(d) {
-    return d[0];
-  })
-  .attr("cy", function(d) {
-    return d[1];
-  })
-  .attr("r", function(d){
-    return Math.sqrt(h-d[1]);
-  });
+var links = [];
+for (i=0;i<nodes.length-1;i++) {
+  links[i] = {"source": 0, "target": i+1 };
+}
 
-svg.selectAll("text")
-  .data(dataset)
-  .enter()
-  .append("text")
-  .text(function(d) {
-    return d[0] + "," + d[1];
-  })
-  .attr("x", function(d) {
-    return d[0];
-  })
-  .attr("y", function(d) {
-    return d[1];
-  })
-  .attr("font-family", "sans-serif")
-  .attr("font-size", "11px")
-  .attr("fill", "red");
+makeDiag(nodes,links);
+
+/* Pre-Load the json data using the queue library */
+  // queue()
+  //   .defer(d3.json, "data/nodes.json")
+  //   .defer(d3.json, "data/links.json")
+  //   .await(makeDiag); 
+
+/* Define the main worker or execution function */
+function makeDiag(nodes, links) {
+
+    /* Establish the dynamic force behavor of the nodes */
+  var force = d3.layout.force()
+                    .nodes(nodes)
+                    .links(links)
+                    .size([w,h])
+                    .linkDistance([150])
+                    .charge([-1500])
+                    .gravity(0.3)
+                    .start();
+
+    /* Draw the nodes themselves */                
+  var nodes = svg.selectAll("circle")
+                    .data(nodes)
+                    .enter()
+                    .append("circle")
+                    .attr("r", 20)
+                    .attr("opacity", 0.5)
+                    .style("fill", function(d,i) { return color(i); })
+                    .call(force.drag);
+
+    /* Draw the edges/links between the nodes */
+  var edges = svg.selectAll("line")
+                    .data(links)
+                    .enter()
+                    .append("line")
+                    .style("stroke", "#ccc")
+                    .style("stroke-width", 1)
+                    .attr("marker-end", "url(#end)");
+    /* Run the Force effect */
+  force.on("tick", function() {
+               edges.attr("x1", function(d) { return d.source.x; })
+                    .attr("y1", function(d) { return d.source.y; })
+                    .attr("x2", function(d) { return d.target.x; })
+                    .attr("y2", function(d) { return d.target.y; });
+               nodes.attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; })
+              ;});
+};
