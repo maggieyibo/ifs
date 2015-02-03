@@ -13,4 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require d3
+
+// add files individually to config/initializers/assets.rb for them to work inline with d3
+// require_tree .

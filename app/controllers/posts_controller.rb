@@ -1,11 +1,12 @@
 class PostsController < ApplicationController
-
+	respond_to :html, :json
 	def index
 	  @posts = Post.all
 	end
 
 	def show
 	  @post = Post.find(params[:id])
+	  respond_with(@post)
 	end
 
 	def new
