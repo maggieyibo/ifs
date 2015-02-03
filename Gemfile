@@ -28,6 +28,10 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Responders for JSON
 gem 'responders', '~> 2.0'
+
+# Attributes and Serializers
+gem 'active_model_serializers'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 

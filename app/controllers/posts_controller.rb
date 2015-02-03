@@ -2,11 +2,12 @@ class PostsController < ApplicationController
 	respond_to :html, :json
 	def index
 	  @posts = Post.all
+	  render json: @posts, each_serializer: PostSerializer
 	end
 
 	def show
 	  @post = Post.find(params[:id])
-	  respond_with(@post)
+	  render json: @post, serializer: PostSerializer
 	end
 
 	def new
