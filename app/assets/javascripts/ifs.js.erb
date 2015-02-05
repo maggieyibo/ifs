@@ -15,26 +15,29 @@ var svg = d3.select("body")
       .attr("width",w);
 
 // make some fake data
-var nodes = [];
-for (i=0;i<20;i++) {
-  nodes[i] = {};
-}
+// var nodes = [];
+// for (i=0;i<20;i++) {
+//   nodes[i] = {};
+// }
 
-var links = [];
-for (i=0;i<nodes.length-1;i++) {
-  links[i] = {"source": 0, "target": i+1 };
-}
+// nodes = "http://localhost:3000/posts";
 
-makeDiag(nodes,links);
+
+// makeDiag(nodes,links);
 
 /* Pre-Load the json data using the queue library */
-  // queue()
-  //   .defer(d3.json, "data/nodes.json")
-  //   .defer(d3.json, "data/links.json")
-  //   .await(makeDiag); 
+  queue()
+    .defer(d3.json, "/posts")
+    // .defer(d3.json, "data/links.json")
+    .await(makeDiag); 
 
 /* Define the main worker or execution function */
-function makeDiag(nodes, links) {
+function makeDiag(error, nodes) {
+
+  var links = [];
+  for (i=0;i<nodes.length-1;i++) {
+    links[i] = {"source": 0, "target": i+1 };
+  }
 
     /* Establish the dynamic force behavor of the nodes */
   var force = d3.layout.force()
