@@ -6,19 +6,43 @@ class IfsController < ApplicationController
 
   def search
     post_weights_array = []
+    
+    search_weights = []
 
-    search_weight = {'1': 40, '2': 20, '3': 35, '4': 5}
+    params[:tagWeights].split(',').each do |o|
+      search_weights << o
+    end
+    # params[:tagWeights].split(',').each do |pair|
+    #   hash = {}
+    #   key, value = pair.split(/:/)
+    #   hash[key] = value.to_i
+    #   search_weight << hash
+    # end
+
+    puts "-----------------"
+    puts search_weights
+    puts "-----------------"
+
     posts = Post.all
 
     posts.each do |p|
       score = 0
+
       p.post_tag_weights.each do |ptw|
-        puts ptw.tag_id
-        if search_weight[:"#{ptw.tag_id}"] != nil
-          score += ptw.weight * search_weight[:"#{ptw.tag_id}"]
+
+        search_weights.each do |o|
+          key, value = o.split(/:/).map {|num| num.to_i}
+          if key == ptw.tag_id
+            score += ptw.weight * value          
+          end
         end
+      
+      
       end
-      post_weights_array << {'#{p.id}': score}
+      if score > 0
+        post_weights_array << {"#{p.id}": score}
+      end
+    
     end
 
     render json: post_weights_array

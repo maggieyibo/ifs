@@ -1,13 +1,16 @@
 // get list of tags from db
 var tags;
 
+// get the tags from server
 queue()
   .defer(d3.json, "/tags")
   .await(handleTags);
 
 function handleTags(error, t) {
-  if (error) 
+  if (error) {
+    // handle error
     return;
+  }
 
   tags = t;
 }
@@ -26,24 +29,22 @@ var svg = d3.select("body")
       .attr("height",h)
       .attr("width",w);
 
-// make some fake data
-// var nodes = [];
-// for (i=0;i<20;i++) {
-//   nodes[i] = {};
-// }
-
-// nodes = "http://localhost:3000/posts";
-
-
-// makeDiag(nodes,links);
 
 /* Pre-Load the json data using the queue library */
+
+// var qString = '1=40&2=10&3=50';
+var qString = "tagWeights=1:40,2:10,3:50";
+
   queue()
-    .defer(d3.json, "/search?1=40&2=10&3=50")
+    .defer(d3.json, "/search?" + qString)
     .await(makeDiag); 
 
 /* Define the main worker or execution function */
 function makeDiag(error, nodes) {
+  if (error) {
+    // handle error
+    return;
+  }
 
   var links = [];
   for (i=0;i<nodes.length-1;i++) {
