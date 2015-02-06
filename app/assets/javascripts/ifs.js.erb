@@ -27,7 +27,7 @@ var svg = d3.select("body")
 
 /* Pre-Load the json data using the queue library */
   queue()
-    .defer(d3.json, "/posts")
+    .defer(d3.json, "/search")
     // .defer(d3.json, "data/links.json")
     .await(makeDiag); 
 
