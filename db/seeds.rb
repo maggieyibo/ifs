@@ -12,12 +12,10 @@ end
 10.times do
   p = Post.create(title: Faker::Company.bs, body: Faker::Hacker.say_something_smart)
   3.times do
-	w = PostTagWeight.create(weight: rand(0..100))
-	w.post = p
-	t = Tag.all.sample
-	w.tag = t
-	w.save
-	# p.tags << t
-	# p.save
+    w = PostTagWeight.create(weight: rand(0..100))
+  	w.post = p
+  	t = Tag.all.sample
+  	w.tag = t
+  	w.save
   end
 end

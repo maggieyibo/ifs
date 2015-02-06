@@ -1,7 +1,8 @@
 class TagsController < ApplicationController
 
 	def index
-	  @tags = Tag.all.order(name: :asc)
+	  @tags = Tag.all
+	  render json: @tags, each_serializer: TagSerializer
 	end
 
 	def show

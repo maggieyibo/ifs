@@ -1,4 +1,16 @@
+// get list of tags from db
+var tags;
 
+queue()
+  .defer(d3.json, "/tags")
+  .await(handleTags);
+
+function handleTags(error, t) {
+  if (error) 
+    return;
+
+  tags = t;
+}
 
 // basic, fake d3 force-layout
 
@@ -29,8 +41,7 @@ var svg = d3.select("body")
 
 /* Pre-Load the json data using the queue library */
   queue()
-    .defer(d3.json, "/posts")
-    // .defer(d3.json, "data/links.json")
+    .defer(d3.json, "/search?1=40&2=10&3=50")
     .await(makeDiag); 
 
 /* Define the main worker or execution function */
