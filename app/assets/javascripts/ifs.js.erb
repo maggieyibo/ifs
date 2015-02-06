@@ -1,4 +1,16 @@
+// get list of tags from db
+var tags;
 
+queue()
+  .defer(d3.json, "/tags")
+  .await(handleTags);
+
+function handleTags(error, t) {
+  if (error) 
+    return;
+
+  tags = t;
+}
 
 // basic, fake d3 force-layout
 
