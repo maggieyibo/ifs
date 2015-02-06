@@ -6,7 +6,9 @@
 var h = 500, w = 700;
 
 // set a color scale (look at color brewer for better selections)
-var color = d3.scale.category20();
+var color = d3.scale.ordinal()
+  .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
+  .domain([0,1,2,3,4,5]);
 
 // create the empty svg
 var svg = d3.select("body")

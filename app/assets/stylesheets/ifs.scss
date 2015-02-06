@@ -11,3 +11,28 @@ div.bar {
         stroke: orange;
         stroke-width: 5;
      }
+
+
+html, body {
+  height: 100%;
+}
+
+#nb {
+	padding: 0;
+	background-color: black;
+	margin-bottom: 0;
+	font-family: 'Chivo', sans-serif;
+}
+
+ #postbox { 
+ 		position: absolute;
+ 		top: 90px;
+  	right: 20px;
+ 		width: 580px;
+ 		height: 520px;
+    padding: 10px;
+    border-left: 7px double #252525;
+    margin: 0;
+    
+  }
+
