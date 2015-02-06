@@ -35,9 +35,9 @@ var svg = d3.select("body")
 // var qString = '1=40&2=10&3=50';
 var qString = "tagWeights=1:40,2:10,3:50";
 
-  queue()
-    .defer(d3.json, "/search?" + qString)
-    .await(makeDiag); 
+queue()
+  .defer(d3.json, "/search?" + qString)
+  .await(makeDiag); 
 
 /* Define the main worker or execution function */
 function makeDiag(error, nodes) {
