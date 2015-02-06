@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   resources :tags
   resources :comments
 
+  get 'search' => 'ifs#search'
+
 end

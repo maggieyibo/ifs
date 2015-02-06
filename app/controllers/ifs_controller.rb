@@ -3,4 +3,9 @@ class IfsController < ApplicationController
 	def main
 		render
 	end
+
+  def search
+    @posts = Post.all
+    render json: @posts, each_serializer: PostSerializer
+  end
 end
