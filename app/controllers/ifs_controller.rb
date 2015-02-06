@@ -5,8 +5,6 @@ class IfsController < ApplicationController
 	end
 
   def search
-    puts ".........................................."
-    puts params
     @posts = Post.all
     render json: @posts, each_serializer: PostSerializer
   end
