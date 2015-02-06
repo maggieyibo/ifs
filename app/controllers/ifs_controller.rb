@@ -12,16 +12,6 @@ class IfsController < ApplicationController
     params[:tagWeights].split(',').each do |o|
       search_weights << o
     end
-    # params[:tagWeights].split(',').each do |pair|
-    #   hash = {}
-    #   key, value = pair.split(/:/)
-    #   hash[key] = value.to_i
-    #   search_weight << hash
-    # end
-
-    puts "-----------------"
-    puts search_weights
-    puts "-----------------"
 
     posts = Post.all
 
