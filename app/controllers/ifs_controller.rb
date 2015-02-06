@@ -13,12 +13,15 @@ class IfsController < ApplicationController
     posts.each do |p|
       score = 0
       p.post_tag_weights.each do |ptw|
-        score += ptw.weight * search_weight[:"#{ptw.tag_id}"]
+        puts ptw.tag_id
+        if search_weight[:"#{ptw.tag_id}"] != nil
+          score += ptw.weight * search_weight[:"#{ptw.tag_id}"]
+        end
       end
-      post_weights_array << {p.id: score}
+      post_weights_array << {'#{p.id}': score}
     end
 
-    render json: posts, each_serializer: PostSerializer
+    render json: post_weights_array
   end
 
 end
