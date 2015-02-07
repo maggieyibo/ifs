@@ -40,20 +40,19 @@ var tagger = new Tagger();
 */
 function Bubble () {
   _this = this;
-  this.h = 500;
-  this.w = 700;
-
-//   // set a color scale (look at color brewer for better selections)
+  
+  // set a color scale (look at color brewer for better selections)
   this.color = d3.scale.ordinal()
     .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
     .domain([0,1,2,3,4,5]);
 
-  // create the empty svg (later, pull from page)
-  this.svg = d3.select("body")
-        .append("svg")
-        .attr("height",this.h)
-        .attr("width",this.w);
-  
+  // get the svg from the page
+  this.svg = d3.select(document.getElementById('bubble-svg'));
+
+  // set the dimensions
+  this.w = this.svg.attr("width");
+  this.h = this.svg.attr("height");
+
   // fake query string
   this.qString = "tagWeights=1:40,2:10,3:50";
 
