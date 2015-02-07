@@ -1,50 +1,73 @@
-// get list of tags from db
-var tags;
+/**
+* Tagger 
+* responsible for the getting and setting of tags and tag weights
+*/
+function Tagger () {
 
-// get the tags from server
-queue()
-  .defer(d3.json, "/tags")
-  .await(handleTags);
+  _this = this;
+  this.test = "test";
+  this.tags = null;
 
-function handleTags(error, t) {
+  // slider:
+  // d3.slider().value(50).orientation("vertical");
+
+  // asynchonous call to get the list of possible tags
+  queue()
+    .defer(d3.json, "/tags")
+    .await(this.handleTags);
+}
+
+
+// Tagger.handleTags
+// call back when queue retuns tags from serer
+Tagger.prototype.handleTags = function(error, tags) {
+
+  // handle error
   if (error) {
-    // handle error
     return;
   }
 
-  tags = t;
+  _this.tags = tags;
+};
+
+
+var tagger = new Tagger();
+
+/**
+* Bubble 
+* responsible for the force direction graph
+* including data and d3
+*/
+function Bubble () {
+  _this = this;
+  this.h = 500;
+  this.w = 700;
+
+//   // set a color scale (look at color brewer for better selections)
+  this.color = d3.scale.ordinal()
+    .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
+    .domain([0,1,2,3,4,5]);
+
+  // create the empty svg (later, pull from page)
+  this.svg = d3.select("body")
+        .append("svg")
+        .attr("height",this.h)
+        .attr("width",this.w);
+  
+  // fake query string
+  this.qString = "tagWeights=1:40,2:10,3:50";
+
+  queue()
+    .defer(d3.json, "/search?" + this.qString)
+    .await(this.makeBubble); 
 }
 
-// basic, fake d3 force-layout
+// Bubble.makeBubble
+// makes the force-direction layout from the given node data
+Bubble.prototype.makeBubble = function(error, nodes) {
 
-// set the dimensions of the svg
-var h = 500, w = 700;
-
-// set a color scale (look at color brewer for better selections)
-var color = d3.scale.ordinal()
-  .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
-  .domain([0,1,2,3,4,5]);
-
-// create the empty svg
-var svg = d3.select("body")
-      .append("svg")
-      .attr("height",h)
-      .attr("width",w);
-
-
-/* Pre-Load the json data using the queue library */
-
-// var qString = '1=40&2=10&3=50';
-var qString = "tagWeights=1:40,2:10,3:50";
-
-queue()
-  .defer(d3.json, "/search?" + qString)
-  .await(makeDiag); 
-
-/* Define the main worker or execution function */
-function makeDiag(error, nodes) {
+  // handle error
   if (error) {
-    // handle error
     return;
   }
 
@@ -53,41 +76,43 @@ function makeDiag(error, nodes) {
     links[i] = {"source": 0, "target": i+1 };
   }
 
-    /* Establish the dynamic force behavor of the nodes */
+  // create the d3 force layout
   var force = d3.layout.force()
-                    .nodes(nodes)
-                    .links(links)
-                    .size([w,h])
-                    .linkDistance([150])
-                    .charge([-1000])
-                    .gravity(0.3)
-                    .start();
+                .nodes(nodes)
+                .links(links)
+                .size([_this.w,_this.h])
+                .linkDistance([150])
+                .charge([-1000])
+                .gravity(0.3)
+                .start();
 
-    /* Draw the nodes themselves */                
-  var nodes = svg.selectAll("circle")
-                    .data(nodes)
-                    .enter()
-                    .append("circle")
-                    .attr("r", 20)
-                    .attr("opacity", 0.5)
-                    .style("fill", function(d,i) { return color(i); })
-                    .call(force.drag);
+  // draw the nodes                 
+  var nodes = _this.svg.selectAll("circle")
+                .data(nodes)
+                .enter()
+                .append("circle")
+                .attr("r", 20)
+                .attr("opacity", 0.5)
+                .style("fill", function(d,i) { return _this.color(i); })
+                .call(force.drag);
 
-    /* Draw the edges/links between the nodes */
-  var edges = svg.selectAll("line")
-                    .data(links)
-                    .enter()
-                    .append("line")
-                    .style("stroke", "#ccc")
-                    .style("stroke-width", 1)
-                    .attr("marker-end", "url(#end)");
-    /* Run the Force effect */
-  force.on("tick", function() {
-               edges.attr("x1", function(d) { return d.source.x; })
-                    .attr("y1", function(d) { return d.source.y; })
-                    .attr("x2", function(d) { return d.target.x; })
-                    .attr("y2", function(d) { return d.target.y; });
-               nodes.attr("cx", function(d) { return d.x; })
-                    .attr("cy", function(d) { return d.y; })
-              ;});
+//     /* Draw the edges/links between the nodes */
+//   var edges = _this.svg.selectAll("line")
+//                     .data(links)
+//                     .enter()
+//                     .append("line")
+//                     .style("stroke", "#ccc")
+//                     .style("stroke-width", 1)
+//                     .attr("marker-end", "url(#end)");
+//     /* Run the Force effect */
+//   force.on("tick", function() {
+//                edges.attr("x1", function(d) { return d.source.x; })
+//                     .attr("y1", function(d) { return d.source.y; })
+//                     .attr("x2", function(d) { return d.target.x; })
+//                     .attr("y2", function(d) { return d.target.y; });
+//                nodes.attr("cx", function(d) { return d.x; })
+//                     .attr("cy", function(d) { return d.y; })
+//               ;});
 };
+
+var bubble = new Bubble();
