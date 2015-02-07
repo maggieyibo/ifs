@@ -8,16 +8,10 @@ function Tagger () {
   // get the div from the page
   this.div = d3.select('tagger-div');
 
-
-
-  // // set the dimensions
-  // this.w = this.svg.attr("width");
-  // this.h = this.svg.attr("height");
-
   this.tags = null;
 
   // slider:
-  // d3.slider().value(50).orientation("vertical");
+  d3.slider().value(50).orientation("vertical");
 
   // asynchonous call to get the list of possible tags
   queue()
