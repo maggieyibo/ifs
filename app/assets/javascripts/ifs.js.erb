@@ -3,9 +3,15 @@
 * responsible for the getting and setting of tags and tag weights
 */
 function Tagger () {
-
   _this = this;
-  this.test = "test";
+
+  // get the svg from the page
+  // this.svg = d3.select(document.getElementById('tagger-svg'));
+
+  // // set the dimensions
+  // this.w = this.svg.attr("width");
+  // this.h = this.svg.attr("height");
+
   this.tags = null;
 
   // slider:
@@ -28,6 +34,8 @@ Tagger.prototype.handleTags = function(error, tags) {
   }
 
   _this.tags = tags;
+
+
 };
 
 
@@ -46,8 +54,8 @@ function Bubble () {
     .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
     .domain([0,1,2,3,4,5]);
 
-  // get the svg from the page
-  this.svg = d3.select(document.getElementById('bubble-svg'));
+  // get the bubble svg from the page
+  this.svg = d3.select('#bubble-svg');
 
   // set the dimensions
   this.w = this.svg.attr("width");
