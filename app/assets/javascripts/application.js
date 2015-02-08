@@ -17,5 +17,7 @@
 //= require d3.slider
 //= require queue
 
-// add files individually to config/initializers/assets.rb for them to work inline with d3
-// require_tree .
+// note: don't 'require_tree .'
+// include files directily in ifs.js
+// also, must add ifs.js specifically to config/initializers/assets.rb for it to work inline with d3
+
