@@ -23,7 +23,7 @@ Tag.create(name: "WDI")
 10.times do
   p = Post.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph(10, false, 10))
   rand(0..8).times do
-    c = Comment.create(body: Faker::Lorem.paragraph(4))
+    c = Comment.create(body: Faker::Lorem.paragraph(4), votes_score: rand(0..100))
     p.comments << c
   end
   3.times do
