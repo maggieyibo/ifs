@@ -20,19 +20,37 @@ Tag.create(name: "science")
 Tag.create(name: "GA")
 Tag.create(name: "WDI")
 
-10.times do
-  p = Post.create(title: Faker::Lorem.sentence, body: Faker::Lorem.paragraph(10, false, 10))
+# create posts
+100.times do
+  p = Post.create(title: "#{Faker::Hacker.adjective} #{Faker::Hacker.noun} #{Faker::Hacker.verb} #{Faker::Hacker.noun}", body: Faker::Lorem.paragraph(10, false, 10))
+  
+  # creat comments
   rand(0..8).times do
-    c = Comment.create(body: Faker::Lorem.paragraph(4), votes_score: rand(0..100))
+    c = Comment.create(body: Faker::Hacker.say_something_smart, votes_score: rand(0..100))
     p.comments << c
   end
-  3.times do
-    w = PostTagWeight.create(weight: rand(0..100))
-  	w.post = p
-  	t = Tag.all.sample
-  	w.tag = t
-  	w.save
+
+  # create some tags with weight
+  total_weight = 100
+
+  while total_weight > 0 do
+    t = Tag.all.sample
+
+    weight = rand(0..100)
+    total_weight -= weight
+
+    # make sure last weight gets us to 0
+    if total_weight < 0 
+      weight += total_weight
+    end
+
+    ptw = PostTagWeight.create(weight: weight)
+    ptw.post = p
+    ptw.tag = t
+    ptw.save
   end
+
+
 end
 
 # require 'httparty'
