@@ -1,0 +1,104 @@
+/**
+*****************************************************************
+* Bubble 
+* responsible for the force direction graph
+* including data and d3
+*/
+function Bubble () {
+  _this = this;
+  this.nodes = [];
+  this.edges = null;
+  this.data = null;
+  
+  // set a color scale (look at color brewer for better selections)
+  this.color = d3.scale.ordinal()
+    .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
+    .domain([0,1,2,3,4,5]);
+
+  // get the bubble svg from the page
+  this.svg = d3.select('#bubble-svg');
+
+  // get the dimensions
+  this.w = this.svg.attr("width");
+  this.h = this.svg.attr("height");
+
+  queue()
+    .defer(d3.json, "/search?" + tagger.queryString)
+    .await(this.makeBubble); 
+}
+
+// Bubble.makeBubble
+// makes the force-direction layout from the given node data
+Bubble.prototype.makeBubble = function(error, data) {
+
+  // handle error
+  if (error) {
+    return;
+  }
+  
+
+  // add the tagger (search weights) as the root node
+  data.unshift({0:0});
+
+  // create links from search to the nodes
+  var links = [];
+  for (i=0;i<data.length-1;i++) {
+    links[i] = {"source": 0, "target": i+1 };
+  }
+
+  // create the d3 force layout
+  var force = d3.layout.force()
+                .nodes(data)
+                .links(links)
+                .size([_this.w,_this.h])
+                .linkDistance([150])
+                .charge([-1000])
+                .gravity(0.3)
+                .start();
+
+  // draw the nodes                 
+  _this.nodes = _this.svg.selectAll("circle")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("r", 20)
+                .attr("opacity", 0.5)
+                .style("fill", function(d,i) { return _this.color(i); })
+                .call(force.drag);
+
+  // draw the edges
+  _this.edges = _this.svg.selectAll("line")
+                .data(links)
+                .enter()
+                .append("line")
+                .style("stroke", "#ccc")
+                .style("stroke-width", 1)
+                .attr("marker-end", "url(#end)");
+
+  // var labels = _this.svg.selectAll("text")
+  //               .data(nodes)
+  //               .enter()
+  //               .append("text")
+  //               .attr("fill", "black")
+  //               .attr("font-family", "sans-serif")
+  //               .attr("font-size", "10px")
+  //               .text(function(d) { return d.name; });
+
+  // animate the bubble
+  force.on("tick", function() {
+    _this.edges.attr("x1", function(d) { return d.source.x; })
+         .attr("y1", function(d) { return d.source.y; })
+         .attr("x2", function(d) { return d.target.x; })
+         .attr("y2", function(d) { return d.target.y; });
+
+    _this.nodes.attr("cx", function(d) { return d.x; })
+         .attr("cy", function(d) { return d.y; });
+
+    // labels.attr("transform", function(d) {
+    //         return "translate(" + d.x + "," + d.y + ")";
+    //     });
+
+  _this.data = data;
+
+  });
+};
