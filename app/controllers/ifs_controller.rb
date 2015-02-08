@@ -38,4 +38,6 @@ class IfsController < ApplicationController
     render json: post_weights_array
   end
 
+
+
 end

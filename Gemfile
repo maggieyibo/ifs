@@ -32,6 +32,12 @@ gem 'responders', '~> 2.0'
 # Attributes and Serializers
 gem 'active_model_serializers'
 
+# Converts JSON data to Pretty-printed Ruby objects
+gem 'httparty'
+
+# Tool to extend hashes into includable Hash extensions
+gem 'hashie'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
