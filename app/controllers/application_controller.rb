@@ -8,4 +8,16 @@ class ApplicationController < ActionController::Base
     { root: false }
   end
 
+  def current_user
+    if session[:user_id]
+      @current_user ||= User.find(session[:user_id]["$oid"])
+    end
+  end
+  
+  helper_method :current_user
+
+  def authorize
+    redirect_to signup_path unless current_user
+  end
+
 end

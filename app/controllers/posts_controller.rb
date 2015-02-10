@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	respond_to :html, :json
+	#respond_to :html, :json
 	def index
 	  @posts = Post.all
 	  render json: @posts, each_serializer: PostSerializer
