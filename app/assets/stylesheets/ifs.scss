@@ -1,13 +1,17 @@
 circle {
   fill: gray;
-  stroke:gray;
-  stroke-width: 4;
+  stroke:orange;
+  stroke-width: 2;
 }
 circle:hover {
   stroke:red;
+  stroke-width: 4;
   transition: stroke, .5s;
 }
-
+line {
+  stroke: "#ccc";
+  stroke-width: 1;  
+}
 
 div.bar {
 	display: inline-block;
