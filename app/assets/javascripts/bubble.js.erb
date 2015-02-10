@@ -35,7 +35,7 @@ Bubble.prototype.makeBubble = function(error, data) {
   if (error) {
     return;
   }
-  
+  console.log(data);
 
   // add the tagger (search weights) as the root node
   data.unshift({0:0});
@@ -71,21 +71,18 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .enter()
                 .append("circle")
                 .attr("r", 20)
-                // .attr("opacity", 0.5)
-                // .style("fill", function(d,i) { return _this.color(i); })
-                // .style("stroke-width", '2px')
-                // .style('stroke', 'red')
                 .call(force.drag);
 
 
   // var labels = _this.svg.selectAll("text")
-  //               .data(nodes)
+  //               .data(data)
   //               .enter()
   //               .append("text")
   //               .attr("fill", "black")
   //               .attr("font-family", "sans-serif")
   //               .attr("font-size", "10px")
-  //               .text(function(d) { return d.name; });
+  //               .text("test");
+                // .text(function(d) { return d.name; });
 
   // animate the bubble
   force.on("tick", function() {
