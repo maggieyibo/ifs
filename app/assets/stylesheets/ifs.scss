@@ -2,7 +2,7 @@ body {
   height: 100%; 
 }
 .gnd {
-  background-color: #999999;
+  background-color: #555555;
 }
 
 ////////////
@@ -13,6 +13,19 @@ body {
 
 }
 
+.tagger-slider-bar {
+  fill: #00ffff;
+}
+
+.tagger-slider-thumb {
+  fill: #ff8000;
+  stroke: #ff3333;
+  stroke-width: 2;
+}
+.tagger-slider-thumb:hover {
+  fill: #ff9933;
+  stroke: #ff0000;
+}
 ////////////
 // bubble //
 ////////////

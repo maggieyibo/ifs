@@ -33,6 +33,7 @@ Bubble.prototype.makeBubble = function(error, data) {
 
   // handle error
   if (error) {
+    console.warn(error);
     return;
   }
   // console.log(data);
@@ -67,8 +68,6 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .enter()
                 .append("line")
                 .attr('class', 'post-line');
-                // .style("stroke", "#ccc")
-                // .style("stroke-width", 1);
 
   // add the nodes                 
   _this.nodes = _this.svg.selectAll("circle")
