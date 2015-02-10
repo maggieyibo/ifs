@@ -53,7 +53,7 @@ Tagger.prototype.handleTags = function(error, tags) {
   .data(tagdata)
   .enter()
   .append('g')
-  .attr("height", 200)
+  .attr("height", 300)
   .attr("widht", 300)
   .attr('transform', 'translate(20, 10)');
 
@@ -150,8 +150,9 @@ Bubble.prototype.makeBubble = function(error, nodes) {
                 .data(nodes)
                 .enter()
                 .append("circle")
-                .attr("r", 20)
+                .attr("r", 40)
                 .attr("opacity", 0.5)
+                .attr("stroke", "yellow")
                 .style("fill", function(d,i) { return _this.color(i); })
                 .call(force.drag);
 

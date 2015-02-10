@@ -6,11 +6,17 @@
    border: solid 1px #aaa;
  }
 </style>
+<svg width="200" height="100">
+ <circle cx="100" cy="100" r="40" fill="yellow" stroke="grey" stroke-width="8"
+        onmouseover="this.setAttribute('r', '90');"
+        onmouseout="this.setAttribute('r', '40');"/>
+</svg>
 <div>
 	<svg id="bubble-svg" height="500" width="700"></svg>
 </div>
 <div id="tagger-div"> 
 </div>
+
 
 <div class=".col-md-6" id="postbox"></div>
 
