@@ -61,23 +61,25 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .gravity(0.3)
                 .start();
 
-  // draw the edges
+  // add the edges
   _this.edges = _this.svg.selectAll("line")
                 .data(links)
                 .enter()
                 .append("line")
-                .style("stroke", "#ccc")
-                .style("stroke-width", 1);
+                .attr('class', 'post-line');
+                // .style("stroke", "#ccc")
+                // .style("stroke-width", 1);
 
-  // draw the nodes                 
+  // add the nodes                 
   _this.nodes = _this.svg.selectAll("circle")
                 .data(data)
                 .enter()
                 .append("circle")
+                .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
                 .attr("r", function(d,i) { return i==0 ? 5 : 5+d.fakeWeight/500} )
                 .call(force.drag);
 
-
+  // add the text
   // var labels = _this.svg.selectAll("text")
   //               .data(data)
   //               .enter()

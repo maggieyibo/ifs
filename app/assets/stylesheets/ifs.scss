@@ -1,18 +1,52 @@
-circle {
-  fill: gray;
-  stroke:orange;
-  stroke-width: 2;
+body {
+  height: 100%; 
 }
-circle:hover {
-  stroke:red;
-  stroke-width: 4;
-  transition: stroke, .5s;
-}
-line {
-  stroke: "#ccc";
-  stroke-width: 1;  
+.gnd {
+  background-color: #999999;
 }
 
+////////////
+// tagger //
+////////////
+
+#tagger-div {
+
+}
+
+////////////
+// bubble //
+////////////
+
+#bubble-svg {
+
+}
+
+.tag-node {
+  fill: white;
+  stroke:blue;
+  stroke-width: 1;
+}
+
+.post-node {
+  fill: #dddddd;
+  stroke:#ff8000;
+  stroke-width: 2;
+}
+
+.post-node:hover {
+  stroke:red;
+  stroke-width: 4;
+  transition: stroke, .3s;
+}
+
+// line from center to a post
+.post-line {
+  stroke: #888888;
+  stroke-width: 2;  
+}
+
+////////////////////////////////////
+///
 div.bar {
 	display: inline-block;
 	width: 20px;
@@ -21,17 +55,7 @@ div.bar {
 	margin-right: 2px;
 }
 
- svg .pumpkin {
-        fill: yellow;
-        stroke: orange;
-        stroke-width: 5;
-     }
 
-
-html, body {
-  height: 100%;
- 
-}
 
 #nb {
 	padding: 0;
