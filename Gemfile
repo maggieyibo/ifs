@@ -62,6 +62,9 @@ group :development, :test do
 
   # Faker is used to generate fake data to test the data model
   gem 'faker'
+
+  # Factory Girl to automatically create test records
+  gem "factory_girl_rails"
   
 end
 
