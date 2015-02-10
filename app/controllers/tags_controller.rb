@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+	before_filter :authorize, :except => [:index, :show]
 
 	def index
 	  @tags = Tag.all

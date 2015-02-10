@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-
+  before_filter :authorize, :except => [:index, :show]
   def index
     @comments = Comment.all
     render json: @comments
