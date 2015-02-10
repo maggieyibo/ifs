@@ -17,27 +17,20 @@ class IfsController < ApplicationController
 
     posts.each do |p|
       score = 0
-
       p.post_tag_weights.each do |ptw|
-
         search_weights.each do |o|
           key, value = o.split(/:/).map {|num| num.to_i}
           if key == ptw.tag_id
             score += ptw.weight * value          
           end
         end
-      
-      
       end
       if score > 0
-        post_weights_array << {"#{p.id}": score}
+        post_weights_array << {post_id: p.id, post_title: p.title, post_body: p.body, comments: p.comments, tags: p.tags, score: score}
       end
-    
     end
 
     render json: post_weights_array
   end
-
-
 
 end
