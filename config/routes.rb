@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-	root to: "ifs#main"
+  get 'users/index'
+
+	root to: "ifs#main", as: 'main'
 
   resources :users
   resources :posts
