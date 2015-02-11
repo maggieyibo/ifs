@@ -41,8 +41,8 @@ Bubble.prototype.makeBubble = function(error, data) {
     return;
   }
 
-  var tagNodeRadius = 50;
-  
+  var tagNodeRadius = 80;
+
   // add the tagger (search weights) as the root node
   data.unshift({0:0});
   data[0].weight = 10000;
@@ -62,8 +62,8 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .nodes(data)
                 .links(links)
                 .size([_this.w,_this.h])
-                .linkDistance(function(d) { return 100-d.target.fakeWeight/800; } )
-                .charge(function(d,i) { return i==0 ? -100 : - d.fakeWeight/9 ; } )
+                .linkDistance(function(d) { return 210-d.target.fakeWeight/100; } )
+                .charge(function(d,i) { return i==0 ? -1000 : - d.fakeWeight/3 ; } )
                 .gravity(0.3)
                 .start();
 
@@ -74,14 +74,58 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .append("line")
                 .attr('class', 'post-line');
 
+
   // add the nodes                 
   _this.nodes = _this.svg.selectAll("circle")
                 .data(data)
                 .enter()
                 .append("circle")
                 .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function(d,i) { return i==0 ? tagNodeRadius : 5+d.fakeWeight/500} )
+                .attr("r", function(d,i) { return i==0 ? tagNodeRadius : 10+d.fakeWeight/400} )
                 .call(force.drag);
+  
+  // create the center pie chart    
+
+  var dataset = [ 5, 10, 20, 45, 6, 25 ];
+
+  var outerRadius = tagNodeRadius;
+  var innerRadius = 25;
+  var arc = d3.svg.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(outerRadius);
+  
+  _this.pie = d3.layout.pie();
+  
+  // Easy colors accessible via a 10-step ordinal scale
+  var color = d3.scale.category10();
+
+  
+  // Set up groups
+  var arcs = _this.svg.selectAll("g.arc")
+          .data(_this.pie(dataset))
+          .enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+  
+  // Draw arc paths
+  arcs.append("path")
+      .attr("fill", function(d, i) {
+        return color(i);
+      })
+      .attr("d", arc);
+  
+  // Labels
+  arcs.append("text")
+      .attr("transform", function(d) {
+        return "translate(" + arc.centroid(d) + ")";
+      })
+      .attr("text-anchor", "middle")
+      .text(function(d) {
+        return d.value;
+      });
+        
+
 
   // add the text
   // var labels = _this.svg.selectAll("text")
@@ -90,21 +134,31 @@ Bubble.prototype.makeBubble = function(error, data) {
   //               .append("text")
   //               .text(function(d) { return d.title; });
 
-  // animate the bubble
+  // animate the bubbles
   force.on("tick", function() {
+  
     _this.edges.attr("x1", function(d) { return d.source.x; })
          .attr("y1", function(d) { return d.source.y; })
          .attr("x2", function(d) { return d.target.x; })
          .attr("y2", function(d) { return d.target.y; });
 
-    _this.nodes.attr("cx", function(d) { return d.x; })
-         .attr("cy", function(d) { return d.y; });
+    _this.nodes.attr('transform', function(d,i) { 
+      // if this is the first node, move the pie chart too
+      // if (i == 0) 
+      //   _this.pie;
+              // .attr('x', d.x)
+              // .attr('y', d.y);
+      return 'translate(' + d.x + ',' + d.y + ')'; 
+    });
+
+    // _this.pie.attr('transform', 'translate(' + 10 + ',' + 10 + ')'); 
+    // _this.pie.attr('transform', 'translate(10,10)'); 
 
     // labels.attr("transform", function(d) {
     //         return "translate(" + d.x + "," + d.y + ")";
     //     });
 
-  _this.data = data;
+  // _this.data = data;
 
   });
 };
