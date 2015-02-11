@@ -58,7 +58,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .links(links)
                 .size([_this.w,_this.h])
                 .linkDistance(function(d) { return 100-d.target.fakeWeight/800; } )
-                .charge(function(d,i) { return i==0 ? -1000 : - d.fakeWeight/9 ; } )
+                .charge(function(d,i) { return i==0 ? -100 : - d.fakeWeight/9 ; } )
                 .gravity(0.3)
                 .start();
 
@@ -75,7 +75,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .enter()
                 .append("circle")
                 .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function(d,i) { return i==0 ? 5 : 5+d.fakeWeight/500} )
+                .attr("r", function(d,i) { return i==0 ? 50 : 5+d.fakeWeight/500} )
                 .call(force.drag);
 
   // add the text
