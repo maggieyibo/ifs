@@ -1,9 +1,66 @@
 html, body {
   height: 100%; 
 }
+
+// // pure css for grid testing
+
+// #header {
+//   background-color: blue;
+//   height: 70px;
+// }
+
+// #mr {
+//   background-color: black;
+//   height: 100px;
+// }
+
+// #main {
+//   background-color: grey;
+//   height: 1600px;
+// }
+
+// #b1 {
+//   background-color: yellow;
+//   height: 400px;
+// }
+
+// #b2 {
+//   background-color: green;
+//   height: 400px;
+// }
+
+// #b3 {
+//   background-color: peachpuff;
+//   height: 400px;
+// }
+
+// #b4 {
+//   background-color: dodgerblue;
+//   height: 400px;
+// }
+
+// #b5 {
+//   background-color: tomato;
+//   height: 400px;
+// }
+
+// #ml {
+//   background-color: black;
+//   height: 800px;
+// }
+
 .gnd {
   background-color: #555555;
   height: 100%;
+}
+#tagbar {
+  float: left;
+  height: 200px;
+  padding: 25px 50px 75px;
+}
+#tagbar.ul {
+  overflow:hidden;
+  overflow-y:scroll;
 }
 
 ////////////
@@ -11,8 +68,7 @@ html, body {
 ////////////
 
 #tagger-div {
-    height: 200px;
-    width: 300px;
+   height: 150px;
 
 
 }
@@ -74,12 +130,24 @@ html, body {
 .viewer-container {
   width: 500px;
   height: 500px;
-  background: white;
+  background: #dddddd;
   border-radius: 10px; 
   float: right;
-  margin-right: 20px;
+  margin-top: 30px;
+  margin-right: 30px;
   vertical-align: top;
+  border-style: solid;
+  border-width: 3px;
+  border-color: orange;
+  transition: border-color, .3s;
+
 }
+
+.viewer-container:hover {
+  border-color: red;
+
+}
+
 div.bar {
 	display: inline-block;
 	width: 20px;
@@ -88,34 +156,37 @@ div.bar {
 	margin-right: 2px;
 }
 
-
-
+/// navigation bar ///
 #nb {
 	padding: 0;
-	background-color: black;
+	background-color: #FFB56C;
+  height: 20px;
 	margin-bottom: 0;
 	font-family: 'Chivo', sans-serif;
+  font-size: 12px;
 }
 
- #postbox { 
- 		position: absolute;
- 		top: 90px;
-  	right: 20px;
- 		width: 580px;
- 		height: 520px;
-    padding: 10px;
-    border-left: 7px double #252525;
-    margin: 0;
-  }
-  /* hamburger menu */
-#dd {
-	vertical-align: center;
-	margin: 8px 0 8px 5px;
-	color: white;
-	font-size: 30px;
-}
+ // #postbox { 
+ // 		position: absolute;
+ // 		top: 90px;
+ //  	right: 20px;
+ // 		width: 580px;
+ // 		height: 520px;
+ //    padding: 10px;
+ //    border-left: 7px double #252525;
+ //    margin: 0;
+ //  }
+
 /* font awesome icons */
 #icons {
 	font-size: 15px;
 }
+
+
+
+
+
+
+
+
 

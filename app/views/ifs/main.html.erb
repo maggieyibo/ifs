@@ -1,13 +1,56 @@
 <!-- the main view for the ifs controller -->
+<%#= render 'header' %>
+
 <div class='gnd'>
-  <div class="tagger-div"> 
-  </div>
+
+  <div class="row">
+    <div class="col-md-4" id="tagbar" style="color: red">tag list
+      <input type="text" class="form-group" placeholder="TAGS">
+      <ul class="list-unstyled">
+        <li>CATS</li>
+        <li>DOGS</li>
+        <li>JAVASCRIPT</li>
+        <li>ANGULARJS</li>
+        <li>RUBY</li>
+        <li>RAILS</li> 
+        <li>CSS</li> 
+        <li>HTML</li>
+        <li>GIFS</li>
+        <li>TECHNOLOGY</li>
+        <li>MOVIES</li>
+        <li>GA</li>
+        <li>WDI</li>
+        <li>MUSIC</li>
+        <li>SPORTS</li>
+        <li>JOKES</li>
+        <li>SCIENCE</li>
+        <li>NEWS</li>
+        <li>RAILS</li>
+        <li>PICS</li>
+        <li>SELF HELP</li>
+        <li>TREES</li>
+      </ul>
+    </div>
+  <div class="col-md-4">tag slider </div>
+  <div class="col-md-4">tag pie chart</div>
+</div>
+<div class="row">
+  <div class="col-md-6">bubble svg</div>
+  <div class="col-md-6">post view</div>
+</div>
+  
 
 	<div class="viewer-container">
+		<div class="viewer-content">
+
+			<h5>this is our post viewer</h5>
+
+		</div>
 
 
 
-
+  </div>
+  <div id="tagger-div"> 
   </div>
   <div class="bubble-div">
   	<svg id="bubble-svg" height="500" width="700"></svg>
