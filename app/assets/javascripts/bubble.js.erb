@@ -9,6 +9,7 @@ function Bubble () {
   this.nodes = [];
   this.edges = null;
   this.data = null;
+  this.arcs = null;
   
   // set a color scale (look at color brewer for better selections)
   // this.color = d3.scale.ordinal()
@@ -57,49 +58,7 @@ Bubble.prototype.makeBubble = function(error, data) {
     data[i+1].fakeWeight = Math.floor( tmpW );   // <- fake data
   }
 
-  ///////////////
-  // pie chart //
-  ///////////////
-
-  var dataset = [ 5, 10, 20, 45, 6, 25 ];
-
-  var outerRadius = tagNodeRadius;
-  var innerRadius = 25;
-  var arc = d3.svg.arc()
-          .innerRadius(innerRadius)
-          .outerRadius(outerRadius);
-  
-  _this.pie = d3.layout.pie();
-  
-  // Easy colors accessible via a 10-step ordinal scale
-  var color = d3.scale.category10();
-
-  
-  // Set up groups
-  var arcs = _this.svg.selectAll("g.arc")
-          .data(_this.pie(dataset))
-          .enter()
-          .append("g")
-          .attr("class", "arc")
-          .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
-  
-  // Draw arc paths
-  arcs.append("path")
-      .attr("fill", function(d, i) {
-        return color(i);
-      })
-      .attr("d", arc);
-  
-  // Labels
-  arcs.append("text")
-      .attr("transform", function(d) {
-        return "translate(" + arc.centroid(d) + ")";
-      })
-      .attr("text-anchor", "middle")
-      .text(function(d) {
-        return d.value;
-      });
-
+ 
   //////////////////
   // force layout //
   //////////////////
@@ -122,14 +81,58 @@ Bubble.prototype.makeBubble = function(error, data) {
 
 
   // add the nodes                 
-  _this.nodes = _this.svg.selectAll("g")
+  _this.nodes = _this.svg.selectAll("circle")
                 .data(data)
               .enter()
-                .append("g")
                 .append("circle")
                 .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function(d,i) { return i==0 ? tagNodeRadius : 10+d.fakeWeight/400} )
+                .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.fakeWeight/400} )
                 .call(force.drag);
+
+
+ ///////////////
+  // pie chart //
+  ///////////////
+
+  var dataset = [ 5, 10, 20, 45, 6, 25 ];
+
+  var outerRadius = tagNodeRadius;
+  var innerRadius = 0;
+  var arc = d3.svg.arc()
+          .innerRadius(innerRadius)
+          .outerRadius(outerRadius);
+  
+  var pie = d3.layout.pie();
+  
+  // Easy colors accessible via a 10-step ordinal scale
+  var color = d3.scale.category10();
+
+  
+  // Set up groups
+  _this.arcs = _this.svg.selectAll("g.arc")
+          .data(pie(dataset))
+          .enter()
+          .append("g")
+          .attr("class", "arc")
+          .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+  
+  // Draw arc paths
+  _this.arcs.append("path")
+      .attr("fill", function(d, i) {
+        return color(i);
+      })
+      .attr("d", arc);
+  
+  // Labels
+  _this.arcs.append("text")
+      .attr("transform", function(d) {
+        return "translate(" + arc.centroid(d) + ")";
+      })
+      .attr("text-anchor", "middle")
+      .text(function(d) {
+        return d.value;
+      });
+
 
   //////////
   // text //
@@ -152,11 +155,14 @@ Bubble.prototype.makeBubble = function(error, data) {
          .attr("y2", function(d) { return d.target.y; });
 
     _this.nodes.attr('transform', function(d,i) { 
+      if (i==0) {
+        // console.log(_this.arcs, d.x,d.y);
+         _this.arcs.attr('transform', 'translate(' + d.x + ',' + d.y + ')'); 
+      }
       return 'translate(' + d.x + ',' + d.y + ')'; 
     });
 
     // _this.pie.attr('transform', 'translate(' + 10 + ',' + 10 + ')'); 
-    // _this.pie.attr('transform', 'translate(10,10)'); 
 
     // labels.attr("transform", function(d) {
     //         return "translate(" + d.x + "," + d.y + ")";
