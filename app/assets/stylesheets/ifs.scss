@@ -36,8 +36,13 @@ body {
 
 .tag-node {
   fill: white;
-  stroke:blue;
-  stroke-width: 1;
+  stroke: none;
+  opacity: 0;
+
+  // make text in pie chart unselectable
+  -webkit-user-select: none;  /* Chrome all / Safari all */
+  -moz-user-select: none;     /* Firefox all */
+  -ms-user-select: none;      /* IE 10+ */
 }
 
 .post-node {

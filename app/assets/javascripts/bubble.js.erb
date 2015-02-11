@@ -58,7 +58,6 @@ Bubble.prototype.makeBubble = function(error, data) {
     data[i+1].fakeWeight = Math.floor( tmpW );   // <- fake data
   }
 
- 
   //////////////////
   // force layout //
   //////////////////
@@ -72,6 +71,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .gravity(0.3)
                 .start();
 
+ 
   // add the edges
   _this.edges = _this.svg.selectAll("line")
                 .data(links)
@@ -80,17 +80,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .attr('class', 'post-line');
 
 
-  // add the nodes                 
-  _this.nodes = _this.svg.selectAll("circle")
-                .data(data)
-              .enter()
-                .append("circle")
-                .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.fakeWeight/400} )
-                .call(force.drag);
-
-
- ///////////////
+  ///////////////
   // pie chart //
   ///////////////
 
@@ -122,6 +112,7 @@ Bubble.prototype.makeBubble = function(error, data) {
         return color(i);
       })
       .attr("d", arc);
+      
   
   // Labels
   _this.arcs.append("text")
@@ -134,15 +125,24 @@ Bubble.prototype.makeBubble = function(error, data) {
       });
 
 
+  // add the nodes                 
+  _this.nodes = _this.svg.selectAll("circle")
+                .data(data)
+              .enter()
+                .append("circle")
+                .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
+                .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.fakeWeight/400} )
+                .call(force.drag);
+
   //////////
   // text //
   //////////
 
-  // var labels = _this.svg.selectAll("text")
-  //               .data(data)
-  //               .enter()
-  //               .append("text")
-  //               .text(function(d) { return d.title; });
+  var labels = _this.svg.selectAll("text")
+                .data(data)
+                .enter()
+                .append("text")
+                .text(function(d) { return d.title; });
 
   //////////
   // tick //
