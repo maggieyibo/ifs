@@ -22,10 +22,14 @@ function Bubble () {
   this.w = this.svg.attr("width");
   this.h = this.svg.attr("height");
 
+  this.search();
+}
+
+Bubble.prototype.search = function() {
   queue()
     .defer(d3.json, "/search?" + tagger.queryString)
-    .await(this.makeBubble); 
-}
+    .await(_this.makeBubble); 
+};
 
 // Bubble.makeBubble
 // makes the force-direction layout from the given node data
