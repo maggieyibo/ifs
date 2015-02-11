@@ -6,41 +6,20 @@
 	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	<%= csrf_meta_tags %>
   <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
-  
   <!-- using font awesome for icons -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
-<body style="border:7px double #252525">
-	<div class='col-md-12' id="nb">
-	<nav class="navbar navbar-inverse" id="nb" role="navigation">
-   <div class="navbar-header" id="blackout">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-menu-hamburger' id="dd"></i></a> 
-            <ul class="dropdown-menu" id="icons">
-               <li><a href="#">HOW TO USE <i class="fa fa-question-circle"></i></a></li>
-               <li class="divider"></li>
-               <li><a href="#">WHY IFS <i class="fa fa-lightbulb-o"></i></a></li>
-               <li class="divider"></li>
-               <li><a href="#">CREDITS <i class="fa fa-users"></i></i></a></li>
-               <li class="divider"></li>
-               <li><a href="#">GITHUB <i class="fa fa-github-alt"></i></a></li>
-            </ul>
-        </li>
-   </div>
-
-
-   <div>
-      <ul class="nav navbar-nav">
-         <li><a href="#">LOGIN <i class="fa fa-key"></i></a></li>
-         <li><a href="#">SIGN UP <i class="fa fa-user-plus"></i></a></li>
-         <li><a href="/posts/new"><i class='glyphicon glyphicon-pencil'></i></a></li>
-      </ul>
-   </div>
-   <div>
-      <div class="navbar-text navbar-right" style="
+<body>
+	<!-- <nav class="navbar navbar-inverse" id="nb" role="navigation">
+  <ul class="nav navbar-nav">
+   <li><a href="#">LOGIN <i class="fa fa-key"></i></a></li>
+   <li><a href="#">SIGN UP <i class="fa fa-user-plus"></i></a></li>
+   <li><a href="/posts/new"><i class='glyphicon glyphicon-pencil'></i></a></li>
+ </ul>
+    <div class="navbar-text navbar-right" style="
     padding-right: 50px;"><i class="fa fa-user"></i> Signed in as ROCKET</div>   
-  </nav>
-  </div>
+  </nav> -->
+  
 
   <%= yield %>
 

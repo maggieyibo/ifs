@@ -4,6 +4,7 @@
 function Tagger () {
   _this = this;
 
+
   var sliderW = 200; // width of the sliders
   var thumbW = 10; // Width of the slider thumb (bug, handle, ...)
 
@@ -34,6 +35,9 @@ function Tagger () {
       weight: 25
     }
   ];
+
+  // get the div from the page
+  this.div = d3.select('.tagger-div');
 
   // Query string tag data [to be set by user with the sliders]
   //this.queryString = "tagWeights=1:40,2:10,3:50";

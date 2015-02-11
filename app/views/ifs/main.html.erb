@@ -1,21 +1,18 @@
-<!-- the main view for the ifs controller -->
-<div class='gnd'>
-  <div id="tagger-div"> 
-    <div class="tagger-new">Choose a tag</div>
-  </div>
 
-	<div class="viewer-container">
+<div class="pure-g" id="main">
+    <div class="pure-u-1-1" id="header"><p>A NEW WAY TO FORUM</p></div>
+    <div class="pure-u-6-24" id="tag-list"></div>
+    <div class="pure-u-8-24" id="tagger-div">
 
+    </div>
+    <div class="pure-u-10-24" id="pie-chart"></div>
 
+    <div class="pure-u-12-24" id="bubble">
+      <svg id="bubble-svg" height="100%" width="100%"></svg>
+    </div>
 
-
-  </div>
-  <div class="bubble-div">
-  	<svg id="bubble-svg" height="500" width="700"></svg>
-  </div>
-
-  
-</div>
+    <div class="pure-u-12-24" id="post-view"></div>
+</div> 
 
 
 <!-- include this here so d3 has access to the DOM -->
