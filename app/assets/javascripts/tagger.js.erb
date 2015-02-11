@@ -1,40 +1,20 @@
 /**
-*****************************************************************
-* Tagger 
-* responsible for the getting and setting of tags and tag weights
-*/
+ * Responsible for the gettig and setting of tags and tag weights
+ */
 function Tagger () {
   _this = this;
 
-  /**
-   * Width of the sliders
-   * @type {Number}
-   */
-  var sliderW = 200;
+  var sliderW = 200; // width of the sliders
+  var thumbW = 10; // Width of the slider thumb (bug, handle, ...)
 
-  /**
-   * Width of the slider thumb (bug, handle, ...)
-   * @type {Number}
-   */
-  var thumbW = 10;
-
-  /**
-   * The list of all possible tags
-   * Set in handleTags via queue call to server
-   * @type {Array} 
-   */
+   // The list of all possible tags
+   // Set in handleTags via queue call to server
   this.all_tags = [];
   
-  /**
-   * The tags that have been set by the user
-   * @type {Array}
-   */
-  this.curr_tags = [];
+  // The tags that have been set by the user
+  this.curr_tags = []; 
 
-  /**
-   * Query string tag data [to be set by user with the sliders]
-   * @type {String}
-   */
+  // Query string tag data [to be set by user with the sliders]
   this.queryString = "tagWeights=1:40,2:10,3:50";
 
   // asynchonous call to get the list of possible tags
@@ -42,13 +22,10 @@ function Tagger () {
     .defer(d3.json, "/tags")
     .await(handleTags);
 
-
-  // var svg = d3.select('#tagger-div')
-  //     .append('svg')
-  //     .attr("height", 200)
-  //     .attr("widht", sliderW);
-
-
+  var svg = d3.select('#tagger-div')
+      .append('svg')
+      .attr("height", 200)
+      .attr("widht", sliderW);
 
 
   ////////////
@@ -105,14 +82,14 @@ function Tagger () {
   // private //
   /////////////
   
-  var addEmptyTag = function() {
+  var addTag = function() {
     // temp
-    // var sliderData = [
-    //   {x: sliderW/2, y: 20}, 
-    //   {x: sliderW/2, y: 60}
-    // ];
+    var sliderData = [
+      {x: sliderW/2, y: 20}, 
+      {x: sliderW/2, y: 60}
+    ];
 
-    this.curr_tags.push( { x: sliderW/2, y: 20 } );
+    _this.curr_tags.push( { x: sliderW/2, y: 20 } );
 
     var drag = d3.behavior.drag()
         .origin(Object)
@@ -123,7 +100,8 @@ function Tagger () {
      * slider group
      * @type {svg:g}
      */
-    var g = svg.selectAll('g')
+    var g = svg
+        .selectAll('g')
         .data(sliderData)
         .enter()
         .append('g')
@@ -148,6 +126,8 @@ function Tagger () {
   };
 
   // addEmptyTag();
+  addTag();
+  
 
 }
 
