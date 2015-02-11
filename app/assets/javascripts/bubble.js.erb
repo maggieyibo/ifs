@@ -38,7 +38,8 @@ Bubble.prototype.search = function() {
     qStr += tagger.curr_tags[i].id + ":" + tagger.curr_tags[i].weight + ",";
   }
   qStr = qStr.substring(0, qStr.length - 1);
-  console.log(qStr);
+
+  // send the data to server search action
   queue()
     .defer(d3.json, "/search?" + qStr)
     .await(_this.makeBubble); 
@@ -92,8 +93,11 @@ Bubble.prototype.makeBubble = function(error, data) {
   // pie chart //
   ///////////////
 
-  var dataset = [ 5, 10, 20, 45, 6, 25 ];
-
+  var dataset = [];
+  for (var i = 0 ; i < tagger.curr_tags.length ; i++) {
+    dataset[i] = tagger.curr_tags[i].weight;
+  }
+console.log(dataset);
   var outerRadius = tagNodeRadius;
   var innerRadius = 0;
   var arc = d3.svg.arc()
