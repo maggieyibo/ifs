@@ -7,6 +7,18 @@ function Tagger () {
   _this = this;
 
   /**
+   * Width of the sliders
+   * @type {Number}
+   */
+  var sliderW = 200;
+
+  /**
+   * Width of the slider thumb (bug, handle, ...)
+   * @type {Number}
+   */
+  var thumbW = 10;
+
+  /**
    * The list of all possible tags
    * Set in handleTags via queue call to server
    * @type {Array} 
@@ -20,12 +32,6 @@ function Tagger () {
   this.curr_tags = [];
 
   /**
-   * The tagger div from the page
-   * @type {div}
-   */
-  this.div = d3.select('tagger-div');
-
-  /**
    * Query string tag data [to be set by user with the sliders]
    * @type {String}
    */
@@ -34,22 +40,58 @@ function Tagger () {
   // asynchonous call to get the list of possible tags
   queue()
     .defer(d3.json, "/tags")
-    .await(this.handleTags);
+    .await(handleTags);
 
-  // set up the sliders
-  var sliderW = 200;
-  var thumbW = 10;
 
-  var svg = d3.select('#tagger-div')
-      .append('svg')
-      .attr("height", 200)
-      .attr("widht", sliderW);
+  // var svg = d3.select('#tagger-div')
+  //     .append('svg')
+  //     .attr("height", 200)
+  //     .attr("widht", sliderW);
+
+
 
 
   ////////////
   // public //
   ////////////
   
+  /**
+   * Call back when queue retuns list of tags from serer
+   * @param  {json}       error     Error returned by queue. Falsey if all good.
+   * @param  {json:array} all_tags  List of all the tags.
+   */
+  function handleTags(error, all_tags) {
+
+    // handle error
+    if (error) {
+      console.warn(error);
+      return;
+    }
+
+    _this.all_tags = all_tags;
+
+    // add new tag div
+    d3.select('#tagger-div')
+      .append('div')
+      .style('height', '40px')
+      .style('width', '300px')
+      .style('background-color', 'red') // <- test
+      .attr('class', 'tagger-new')
+      .text("Choose a tag");
+
+
+    // populate the dropdowns
+    // 
+    // d3.select('#tagger-div')
+    //         .selectAll('div')
+    //         .data(all_tags)
+    //       .enter().append('div')
+    //         .text(function(d) { return d.name; });
+    // console.log(d3.select('#slider1'))
+    // d3.select('#slider1').call(d3.slider().value(50));
+
+  }
+
   function dragMove(d) {
     d3.select(this)
     .attr("x", d.x = Math.max(0, Math.min(sliderW, d3.event.x)) - thumbW/2);
@@ -105,34 +147,8 @@ function Tagger () {
 
   };
 
-  addEmptyTag();
+  // addEmptyTag();
 
 }
 
 // Tagger.handleTags
-/**
- * Call back when queue retuns list of tags from serer
- * @param  {json}       error     Error returned by queue. Falsey if all good.
- * @param  {json:array} all_tags  List of all the tags.
- */
-Tagger.prototype.handleTags = function(error, all_tags) {
-
-  // handle error
-  if (error) {
-    console.warn(error);
-    return;
-  }
-
-  _this.all_tags = all_tags;
-
-  // populate the dropdowns
-  // 
-  // d3.select('#tagger-div')
-  //         .selectAll('div')
-  //         .data(all_tags)
-  //       .enter().append('div')
-  //         .text(function(d) { return d.name; });
-  // console.log(d3.select('#slider1'))
-  // d3.select('#slider1').call(d3.slider().value(50));
-
-};
