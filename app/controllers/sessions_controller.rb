@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     # Check to see if user exists and is authenticated with password
 
     if user && user.authenticate(parmas[:user][:password])
-      redirect_to search_path
+      redirect_to main_path
 
     # Render new if the login information is incorrect
     
