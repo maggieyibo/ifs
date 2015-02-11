@@ -12,10 +12,26 @@ function Tagger () {
   this.all_tags = [];
   
   // The tags that have been set by the user
-  this.curr_tags = []; 
+  this.curr_tags = [
+    {
+      id: 1,
+      name: "funny",
+      weight: 40
+    },
+    {
+      id: 2,
+      name: "pics",
+      weight: 10
+    },
+    {
+      id: 3,
+      name: "gifs",
+      weight: 50
+    }
+  ];
 
   // Query string tag data [to be set by user with the sliders]
-  this.queryString = "tagWeights=1:40,2:10,3:50";
+  //this.queryString = "tagWeights=1:40,2:10,3:50";
 
   // asynchonous call to get the list of possible tags
   queue()
@@ -89,7 +105,7 @@ function Tagger () {
       {x: sliderW/2, y: 60}
     ];
 
-    _this.curr_tags.push( { x: sliderW/2, y: 20 } );
+    // _this.curr_tags.push( { x: sliderW/2, y: 20 } );
 
     var drag = d3.behavior.drag()
         .origin(Object)

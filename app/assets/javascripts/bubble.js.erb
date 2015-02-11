@@ -27,8 +27,20 @@ function Bubble () {
 }
 
 Bubble.prototype.search = function() {
+  if (tagger.curr_tags.length < 1) {
+    console.warn("Must set some tags before searching!");
+    return;
+  }
+
+  // "tagWeights=1:40,2:10,3:50"
+  var qStr = "tagWeights=";
+  for (var i=0 ; i < tagger.curr_tags.length ; i++ ) {
+    qStr += tagger.curr_tags[i].id + ":" + tagger.curr_tags[i].weight + ",";
+  }
+  qStr = qStr.substring(0, qStr.length - 1);
+  console.log(qStr);
   queue()
-    .defer(d3.json, "/search?" + tagger.queryString)
+    .defer(d3.json, "/search?" + qStr)
     .await(_this.makeBubble); 
 };
 
