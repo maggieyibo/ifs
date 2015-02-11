@@ -11,9 +11,9 @@ function Bubble () {
   this.data = null;
   
   // set a color scale (look at color brewer for better selections)
-  this.color = d3.scale.ordinal()
-    .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
-    .domain([0,1,2,3,4,5]);
+  // this.color = d3.scale.ordinal()
+  //   .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
+  //   .domain([0,1,2,3,4,5]);
 
   // get the bubble svg from the page
   this.svg = d3.select('#bubble-svg');
@@ -40,8 +40,9 @@ Bubble.prototype.makeBubble = function(error, data) {
     console.warn(error);
     return;
   }
-  // console.log(data);
 
+  var tagNodeRadius = 50;
+  
   // add the tagger (search weights) as the root node
   data.unshift({0:0});
   data[0].weight = 10000;
@@ -79,7 +80,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .enter()
                 .append("circle")
                 .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function(d,i) { return i==0 ? 50 : 5+d.fakeWeight/500} )
+                .attr("r", function(d,i) { return i==0 ? tagNodeRadius : 5+d.fakeWeight/500} )
                 .call(force.drag);
 
   // add the text
