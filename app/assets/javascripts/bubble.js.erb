@@ -97,7 +97,7 @@ Bubble.prototype.makeBubble = function(error, data) {
   for (var i = 0 ; i < tagger.curr_tags.length ; i++) {
     dataset[i] = tagger.curr_tags[i].weight;
   }
-console.log(dataset);
+
   var outerRadius = tagNodeRadius;
   var innerRadius = 0;
   var arc = d3.svg.arc()
@@ -132,8 +132,8 @@ console.log(dataset);
         return "translate(" + arc.centroid(d) + ")";
       })
       .attr("text-anchor", "middle")
-      .text(function(d) {
-        return d.value;
+      .text(function(d,i) {
+        return tagger.curr_tags[i].name;
       });
 
 
