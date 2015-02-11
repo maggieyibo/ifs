@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require d3
-//= require d3pie
 //= require queue
 
 // note: don't 'require_tree .'
