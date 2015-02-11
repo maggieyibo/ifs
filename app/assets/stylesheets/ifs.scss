@@ -2,59 +2,53 @@ html, body {
   height: 100%; 
 }
 
-// // pure css for grid testing
+// pure css for grid testing
+div {
+  border: 1px solid black;
+  box-sizing: border-box;
 
-// #header {
-//   background-color: blue;
-//   height: 70px;
-// }
 
-// #mr {
-//   background-color: black;
-//   height: 100px;
-// }
+}
+#header {
+  background-color: black;
+  height: 40px;
+}
 
-// #main {
-//   background-color: grey;
-//   height: 1600px;
-// }
+#main {
+  background-color: grey;
+}
 
-// #b1 {
-//   background-color: yellow;
-//   height: 400px;
-// }
+#tag-list {
+  background-color: grey;
+  height: 600px;
+}
 
-// #b2 {
-//   background-color: green;
-//   height: 400px;
-// }
+#tagger-div {
+  background-color: grey;
+  height: 600px;
+}
 
-// #b3 {
-//   background-color: peachpuff;
-//   height: 400px;
-// }
+#pie-chart {
+  background-color: grey;
+  height: 600px;
+}
 
-// #b4 {
-//   background-color: dodgerblue;
-//   height: 400px;
-// }
+#bubble {
+  background-color: grey;
+  height: 600px;
+}
 
-// #b5 {
-//   background-color: tomato;
-//   height: 400px;
-// }
-
-// #ml {
-//   background-color: black;
-//   height: 800px;
-// }
+#post-view {
+  background-color: grey;
+  height: 600px;
+}
 
 .gnd {
   background-color: #555555;
   height: 100%;
 }
 #tagbar {
-  float: left;
+
   height: 200px;
   padding: 25px 50px 75px;
 }
@@ -147,7 +141,6 @@ html, body {
   border-color: red;
 
 }
-
 div.bar {
 	display: inline-block;
 	width: 20px;
@@ -155,6 +148,7 @@ div.bar {
 	background-color: teal;
 	margin-right: 2px;
 }
+
 
 /// navigation bar ///
 #nb {
