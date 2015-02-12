@@ -4,42 +4,79 @@ html, body {
 
 // pure css for grid testing
 div {
-  border: 1px solid black;
+  // border: 1px solid #f9daa4;
   box-sizing: border-box;
 
 
 }
+////header style////
 #header {
-  background-color: black;
-  height: 40px;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  font-size: 35px;
+  padding: 15px;
+  color: white;
+  background-color: #002738;
+  height: 70px;
+}
+
+.logo {
+  margin-right: 200px;
+  font-size: 50px;
+}
+
+#login {
+  float: left;
+  font-size: 20px;
+}
+
+#signup {
+  float: left;
+  font-size: 20px;
+}
+
+#newpost {
+  float: right;
+  font-size: 20px;
 }
 
 #main {
-  background-color: grey;
+  background-color: #002738;
+}
+// style for tag list //
+#tag-list {
+  // background-color: grey;
+  height: 600px;
+  text-align: left;
+  padding-left: 30px;
+  font-family: 'Karla', sans-serif;
+  color: white;
+  overflow: auto;
 }
 
-#tag-list {
-  background-color: grey;
-  height: 600px;
+#searchbox {
+  border-style: solid;
+  padding-left: 20px;
+  border-radius: 2px;
 }
 
 #tagger-div {
-  background-color: grey;
+  // background-color: grey;
   height: 600px;
 }
 
 #pie-chart {
-  background-color: grey;
+  // background-color: grey;
   height: 600px;
 }
 
 #bubble {
-  background-color: grey;
+  // background-color: grey;
   height: 600px;
 }
 
 #post-view {
-  background-color: grey;
+  // background-color: grey;
   height: 600px;
 }
 
@@ -47,25 +84,11 @@ div {
   background-color: #555555;
   height: 100%;
 }
-#tagbar {
 
-  height: 200px;
-  padding: 25px 50px 75px;
-}
-#tagbar.ul {
-  overflow:hidden;
-  overflow-y:scroll;
-}
 
 ////////////
 // tagger //
 ////////////
-
-#tagger-div {
-   height: 150px;
-
-
-}
 
 .tagger-slider-bar {
   fill: #00ffff;
@@ -155,15 +178,15 @@ div.bar {
 }
 
 
-/// navigation bar ///
-#nb {
-	padding: 0;
-	background-color: #FFB56C;
-  height: 20px;
-	margin-bottom: 0;
-	font-family: 'Chivo', sans-serif;
-  font-size: 12px;
-}
+// /// navigation bar ///
+// #nb {
+// 	padding: 0;
+// 	background-color: #FFB56C;
+//   height: 20px;
+// 	margin-bottom: 0;
+// 	font-family: 'Chivo', sans-serif;
+//   font-size: 12px;
+// }
 
  // #postbox { 
  // 		position: absolute;
