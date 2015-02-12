@@ -39,21 +39,18 @@ function Tagger () {
     var sliderW = 200;
     
     var sliderData = [
-      {x: sliderW/2, y: 20}, 
-      {x: sliderW/2, y: 60}
+      {x: sliderW/2, y: 20}
     ];
-
-    // _this.curr_tags.push( { x: sliderW/2, y: 20 } );
 
     var drag = d3.behavior.drag()
         .origin(Object)
         .on("drag", dragMove)
         .on('dragend', dragEnd);
 
-    /**
-     * slider group
-     * @type {svg:g}
-     */
+
+
+    var svg = d3.select('#tagger-div')
+
     var g = svg
         .selectAll('g')
         .data(sliderData)
