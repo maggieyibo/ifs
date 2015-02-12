@@ -1,0 +1,55 @@
+/**
+ * Gets the tags from the server, displays then
+ * and lets the users select
+ *
+ * @constructor
+ */
+function TagList () {
+  _this = this;
+
+  this.tags = [];
+
+  // asynchonous queue call to get the list of possible tags
+  queue()
+    .defer(d3.json, "/tags")
+    .await(handleTags);
+
+
+  ////////////
+  // public //
+  ////////////
+
+  /**
+   * Call back when queue retuns list of tags from serer
+   * @param  {json}       error     Error returned by queue. Falsey if all good.
+   * @param  {json:array} all_tags  List of all the tags.
+   */
+  function handleTags(error, all_tags) {
+
+    // handle error
+    if (error) {
+      console.warn(error);
+      return;
+    }
+
+    _this.all_tags = all_tags;
+
+    // add new tag div
+    d3.select('#tag-list')
+        .selectAll('div')
+        .data(all_tags)
+      .enter()
+        .append('div')
+        .attr('class', 'tag-itm')
+        .on('click',handleClick)
+        .text(function(d) {
+          return d.name;
+        });
+  }
+
+  function handleClick(evt) {
+      tagger.addTag(evt)
+  }
+}
+
+

@@ -1,8 +1,8 @@
 /**
-*****************************************************************
-* Bubble 
-* responsible for the force direction graph
+* Responsible for the force direction graph
 * including data and d3
+*
+* @constructor
 */
 function Bubble () {
   _this = this;
@@ -23,7 +23,7 @@ function Bubble () {
   this.w = this.svg.attr("width");
   this.h = this.svg.attr("height");
 
-  this.search();
+  //this.search();
 }
 
 Bubble.prototype.search = function() {
