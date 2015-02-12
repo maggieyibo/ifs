@@ -6,11 +6,8 @@
 function Tagger () {
   _this = this;
 
-  // The list of all possible tags
-  // Set in handleTags via queue call to server
-  this.all_tags = [];
-  
   // The tags that have been set by the user
+  // [fake data]
   this.curr_tags = [
     {
       id: 1,
@@ -43,14 +40,7 @@ function Tagger () {
     // slider data
     var sliderData = [
       {x: sliderW/2, y: 26}
-    ];
-
-    // the d3 drag behavior
-    var drag = d3.behavior.drag()
-        .origin(Object)
-        .on("drag", dragMove)
-        .on('dragend', dragEnd);
-  
+    ];  
 
     var svg = d3.select('#tagger-div')
         .append('div')
@@ -74,6 +64,11 @@ function Tagger () {
           .attr("width", sliderW)
           .attr('transform', 'translate(20, 34)');
 
+    // the d3 drag behavior
+    var drag = d3.behavior.drag()
+        .origin(function(d) { return d; })
+        .on("drag", dragMove);
+
     // thumb
     svg.selectAll('g')
           .data(sliderData)
@@ -88,15 +83,13 @@ function Tagger () {
           })
           .call(drag);
     
+
+
     function dragMove(d) {
       console.log(d.x);
       d3.select(this)
         // .attr("x", d.x = d3.event.x - thumbW/2);
       .attr("x", d.x = Math.max(0, Math.min(sliderW, d3.event.x)) - thumbW/2);
-    }
-
-    function dragEnd(d) {
-      d3.select(this)
     }
   };
 }
