@@ -6,13 +6,12 @@
 function Tagger () {
   _this = this;
 
-  var width = 240,
-    height = 60,
-    radius = 20;
+  var svgWidth = 400,
+      svgHeight = 60;
 
-  var sliderX = 20, 
-      sliderY = 34,
-      sliderW = 200,
+  var sliderX = 40, 
+      sliderY = 31,
+      sliderW = 300,
       sliderH = 4;
 
   var thumbW = 8,
@@ -26,8 +25,9 @@ function Tagger () {
     this.curr_tags.push({
       id: tag.id,
       name: tag.name,
-      x: width / 2,
-      y: sliderY - thumbH / 2 + sliderH / 2
+      x: sliderX + sliderW / 2,
+      y: sliderY - thumbH / 2 + sliderH / 2,
+      weight: 50
     });
 
     var drag = d3.behavior.drag()
@@ -37,8 +37,8 @@ function Tagger () {
     var svg = d3.select('#tagger-div').selectAll('svg')
         .data(this.curr_tags)
       .enter().append("svg")
-        .attr("width", width)
-        .attr("height", height);
+        .attr("width", svgWidth)
+        .attr("height", svgHeight);
 
     // bar
     svg.append('rect')
@@ -60,15 +60,40 @@ function Tagger () {
     svg.append('text')
           .text(tag.name)
           .attr('class', 'tagger-slider-label')
-          .attr('transform', 'translate(10, 18)')
-          .attr('font-family', 'sans-serif')
-          .attr('font-size', '14px')
-          .attr('fill', '#ffcc99');
+          .attr('transform', 'translate(10, 18)');
+
+    // slider labels
+    svg.append('text')
+          .text('0')
+          .attr('class', 'tagger-slider-num')
+          .attr('transform', 'translate(' + (sliderX - 14) + ', ' + (sliderY + 7)+ ')');
+
+    svg.append('text')
+          .text('100')
+          .attr('class', 'tagger-slider-num')
+          .attr('transform', 'translate(' + (sliderX + sliderW + 3) + ', ' + (sliderY + 7)+ ')');
+
+    var thumbTxt = svg.append('text')
+          .text('50')
+          .attr('class', 'tagger-slider-num')
+          .attr('transform', 'translate(' + (sliderX + sliderW / 2 - 5) + ', ' + (sliderY + sliderH + thumbH + 4)+ ')');
 
     function dragmove(d) {
+      var x = Math.max(sliderX, Math.min(sliderX + sliderW - thumbW, d3.event.x));
+      
+      // move the thumb
       d3.select(this)
-          // .attr("x", d.x = d3.event.x);
-          .attr("x", d.x = Math.max(sliderX, Math.min(sliderX + sliderW, d3.event.x)) - thumbW/2);   
+          .attr('x', d.x = x);
+
+      // get the moving text's current Y
+      var tY = d3.transform(thumbTxt.attr("transform")).translate[1];
+
+      // calculate the weight
+      thumbTxt.weight = Math.round( (x-sliderX) / (sliderW - thumbW) * 100 );
+      thumbTxt
+          .attr('transform', 'translate(' + (x - 5) + ', ' + tY + ')')
+          .text( thumbTxt.weight );
+
     }
   };
 }
