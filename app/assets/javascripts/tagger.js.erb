@@ -37,6 +37,7 @@ function Tagger () {
     var svg = d3.select('#tagger-div').selectAll('svg')
         .data(this.curr_tags)
       .enter().append("svg")
+        .attr('class', 'tagger-svg')
         .attr("width", svgWidth)
         .attr("height", svgHeight);
 
