@@ -23,15 +23,19 @@ function Tagger () {
   this.addTag = function(tag) {
     
     // only allow n tags
-
     var allowedTags = 9;
     if ( this.tags.length >= allowedTags ) {
-      // message: "Sorry, you can only search on " + allowedTags + " tags.
+      alert("Sorry, you can only search on " + allowedTags + " tags.");
       return;
     }
 
     // check if tag is already in list
-    // if ()
+    for (i=0;i<this.tags.length;i++) {
+      if (tag.id === this.tags[i].id) {
+        alert("You get to search on each tag only once.");
+        return;
+      }
+    }
 
     this.tags.push({
       id: tag.id,
