@@ -19,13 +19,27 @@ function Piechart () {
   ];
   var pie = null;
 
+  var setData = function() {
+    var data = [];
+    
+    for (var i=0 ; i < tagger.tags.length ; i++ ) {
+      data.push({
+        label: tagger.tags[i].name,
+        value: tagger.tags[i].weight,
+        color: colors[i]
+      });
+    }
+    return data;
+  }
 
   /**
    * Called when just the values of existing tags changes
    * (no animation)
    */
   this.updateVals = function() {
+    var data = setData();
     pie.updateProp("effects.load.effect", "none");
+    pie.updateProp("data.content", data);
   };
 
   /**
@@ -40,21 +54,13 @@ function Piechart () {
       return;
     }
 
-    var data = [];
+    var data = setData();
     
-    for (var i=0 ; i < tagger.tags.length ; i++ ) {
-      data.push({
-        label: tagger.tags[i].name,
-        value: tagger.tags[i].weight,
-        color: colors[i]
-      });
-    }
-
     // if we have already made the pie chart
     if (pie) {
 
       // switch to animation mode 
-      // pie.updateProp("effects.load.effect", "default");
+      pie.updateProp("effects.load.effect", "default");
 
       // update the data
       pie.updateProp("data.content", data);
@@ -95,11 +101,14 @@ function Piechart () {
             "color": "#ffffff"
           }
         },
-        "effects": {
+        effects: {
           "pullOutSegmentOnClick": {
             "effect": "linear",
             "speed": 400,
             "size": 8
+          },
+          load: {
+            effect: "default"
           }
         },
         "misc": {
