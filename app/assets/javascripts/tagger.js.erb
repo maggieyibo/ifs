@@ -18,11 +18,11 @@ function Tagger () {
       thumbH = 20;
 
   // The tags that have been set by the user
-  this.curr_tags = [];
+  this.tags = [];
 
   this.addTag = function(tag) {
     
-    this.curr_tags.push({
+    this.tags.push({
       id: tag.id,
       name: tag.name,
       x: sliderX + sliderW / 2,
@@ -35,7 +35,7 @@ function Tagger () {
         .on("drag", dragmove);
 
     var svg = d3.select('#tagger-div').selectAll('svg')
-        .data(this.curr_tags)
+        .data(this.tags)
       .enter().append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight);
