@@ -23,6 +23,7 @@ function Piechart () {
     var data = [];
     
     for (var i=0 ; i < tagger.tags.length ; i++ ) {
+      console.log(tagger.tags[i].weight);
       data.push({
         label: tagger.tags[i].name,
         value: tagger.tags[i].weight,
