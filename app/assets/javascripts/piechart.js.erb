@@ -5,4 +5,158 @@
  */
 function Piechart () {
 
-}
+  this.color = d3.scale.ordinal()
+    .range([  "#7e3838", "#7e6538", "#7c7e38", "#587e38", "#387e45",
+              "#387e6a", "#386a7e", "#38507e", "#4d387e", "#7a387e"])
+    .domain([0,1,2,3,4,5,6,7,8,9]);
+
+
+
+  /**
+   * Called when just the values of existing tags changes
+   * (no animation)
+   */
+  this.updateVals = function() {
+
+  };
+
+  /**
+   * Called whenever a tag is added or removed from the list
+   * (full animation)
+   */
+  this.updateTagList = function() {
+    tagger.tags;
+    var data = [
+      { label: "funny", value: 1, color: "#7e3838"},
+      { label: "pics", value: 4, color: "#587e38"},
+      { label: "gifs", value: 3, color: "#38507e"}
+    ];
+
+    var pie = new d3pie("#pie-chart", {
+      header: {
+        "title": {
+          "text": "Weighted Tags",
+          "color": "#dfdfdf",
+          "fontSize": 24,
+          "font": "helvetica"
+        },
+        "subtitle": {
+          "text": "The full, weighted list of tags to search for",
+          "color": "#999999",
+          "fontSize": 12,
+          "font": "open sans"
+        },
+        "titleSubtitlePadding": 9
+      },
+      "footer": {
+        "color": "#999999",
+        "fontSize": 10,
+        "font": "open sans",
+        "location": "bottom-left"
+      },
+      "size": {
+        "canvasWidth": 590,
+        "pieInnerRadius": "66%",
+        "pieOuterRadius": "90%"
+      },
+      data: {
+        "sortOrder": "value-desc",
+        content: data,
+      //   "content": [
+      //     {
+      //       "label": "JavaScript",
+      //       "value": 264131,
+      //       "color": "#7e3838"
+      //     },
+      //     {
+      //       "label": "Ruby",
+      //       "value": 218812,
+      //       "color": "#7e6538"
+      //     },
+      //     {
+      //       "label": "Java",
+      //       "value": 157618,
+      //       "color": "#7c7e38"
+      //     },
+      //     {
+      //       "label": "PHP",
+      //       "value": 114384,
+      //       "color": "#587e38"
+      //     },
+      //     {
+      //       "label": "Python",
+      //       "value": 95002,
+      //       "color": "#387e45"
+      //     },
+      //     {
+      //       "label": "C+",
+      //       "value": 78327,
+      //       "color": "#387e6a"
+      //     },
+      //     {
+      //       "label": "C",
+      //       "value": 67706,
+      //       "color": "#386a7e"
+      //     },
+      //     {
+      //       "label": "Objective-C",
+      //       "value": 36344,
+      //       "color": "#38507e"
+      //     },
+      //     {
+      //       "label": "Shell",
+      //       "value": 28561,
+      //       "color": "#4d387e"
+      //     },
+      //     {
+      //       "label": "Cobol",
+      //       "value": 24131,
+      //       "color": "#7a387e"
+      //     }
+      //   ]
+      },
+      "labels": {
+        "outer": {
+          "pieDistance": 24
+        },
+        "inner": {
+          "hideWhenLessThanPercentage": 3
+        },
+        "mainLabel": {
+          "color": "#e6e6e6",
+          "fontSize": 11
+        },
+        "percentage": {
+          "color": "#d2d2d2",
+          "decimalPlaces": 0
+        },
+        "value": {
+          "color": "#797979",
+          "fontSize": 11
+        },
+        "lines": {
+          "enabled": true,
+          "color": "#ffffff"
+        }
+      },
+      "effects": {
+        "pullOutSegmentOnClick": {
+          "effect": "linear",
+          "speed": 400,
+          "size": 8
+        }
+      },
+      "misc": {
+        "colors": {
+          "segmentStroke": "#747474"
+        },
+        "gradient": {
+          "enabled": true,
+          "percentage": 89
+        }
+      }
+    });
+
+  } // end updateTagList
+  this.updateTagList();
+} // end Piechart
