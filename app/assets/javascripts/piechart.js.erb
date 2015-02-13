@@ -25,7 +25,7 @@ function Piechart () {
    * (no animation)
    */
   this.updateVals = function() {
-
+    pie.updateProp("effects.load.effect", "none");
   };
 
   /**
@@ -40,7 +40,6 @@ function Piechart () {
       return;
     }
 
-
     var data = [];
     
     for (var i=0 ; i < tagger.tags.length ; i++ ) {
@@ -51,9 +50,17 @@ function Piechart () {
       });
     }
 
+    // if we have already made the pie chart
     if (pie) {
+
+      // switch to animation mode 
+      // pie.updateProp("effects.load.effect", "default");
+
+      // update the data
       pie.updateProp("data.content", data);
+
     } else {
+      // create the chart
       pie = new d3pie("#pie-chart", {
         "size": {
           "canvasWidth": 590,
