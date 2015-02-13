@@ -1,6 +1,5 @@
 class TagsController < ApplicationController
-	before_filter :authorize, :except => [:index, :show]
-
+	before_action :authorize, :except => [:index, :show]
 	def index
 	  @tags = Tag.all
 	  render json: @tags, each_serializer: TagSerializer

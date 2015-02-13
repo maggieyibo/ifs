@@ -14,7 +14,7 @@ class IfsController < ApplicationController
     params[:tagWeights].split(',').each do |o|
       search_weights << o
     end
-
+    
     posts = Post.all
 
     posts.each do |p|

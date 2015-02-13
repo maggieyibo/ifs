@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'users/index'
-
-	root to: "ifs#main", as: 'main'
+  root to: "ifs#main", as: 'main'
 
   resources :users
   resources :posts
@@ -10,5 +8,9 @@ Rails.application.routes.draw do
   resources :comments
 
   get 'search' => 'ifs#search'
+  get '/signup' => 'users#new'
+  get '/login' => 'sessions#new'
+  post '/login' => 'sessions#create'
+  delete '/logout' => 'sessions#destroy'
 
 end

@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+	before_action :authorize
 	#respond_to :html, :json
 	def index
 	  @posts = Post.all
@@ -12,13 +13,14 @@ class PostsController < ApplicationController
 
 	def new
 	  @post = Post.new
+    # @tags = Tag.all
 	end
 
 	def create
 	  @post = Post.new(post_params)
 
 	  if @post.save
-	  	redirect_to posts_path
+	  	redirect_to main_path
 	  else
 	  	render :new
 	  end    
