@@ -7,15 +7,18 @@ function Tagger () {
   _this = this;
 
   var svgWidth = 400,
-      svgHeight = 60;
+      svgHeight = 54;
 
   var sliderX = 40, 
-      sliderY = 31,
+      sliderY = 24,
       sliderW = 300,
       sliderH = 4;
 
   var thumbW = 8,
       thumbH = 20;
+
+  var labelX = 10,
+      labelY = 9;
 
   // The tags that have been set by the user
   this.tags = [];
@@ -76,7 +79,7 @@ function Tagger () {
     svg.append('text')
           .text(tag.name)
           .attr('class', 'tagger-slider-label')
-          .attr('transform', 'translate(10, 18)');
+          .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
 
     // slider labels
     svg.append('text')
