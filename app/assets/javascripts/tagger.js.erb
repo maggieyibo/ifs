@@ -73,6 +73,7 @@ function Tagger () {
           .attr('class', 'tagger-slider-thumb')
           .attr('width', thumbW)
           .attr('height', thumbH)
+          .attr('cursor', 'pointer')
           .attr('x', function(d) { return d.x; })
           .attr('y', function(d) { return d.y; })
           .call(drag);
