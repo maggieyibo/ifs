@@ -23,21 +23,44 @@ div {
 .logo {
   margin-right: 200px;
   font-size: 50px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #login {
   float: left;
   font-size: 20px;
+  text-decoration: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #signup {
   float: left;
   font-size: 20px;
+  text-decoration: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #newpost {
   float: right;
   font-size: 20px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #main {
@@ -54,6 +77,11 @@ div {
   font-size: 14px;
   color: white;
   overflow: auto;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .container-div {
@@ -75,16 +103,33 @@ div {
 #selection-text {
    position: absolute;
    padding-left: 47px;
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   -ms-user-select: none;
+   user-select: none;
 }
 
 #box-text {
   padding-left: 40px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
  
 }
 
 #pie-chart {
   // background-color: grey;
   height: 570px;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  -ms-user-select: none;
+  user-select: none;
 
 }
 
@@ -118,6 +163,11 @@ div {
   font-size: 14px;
   overflow-y: auto;
   overflow-x: hidden;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .tagger-slider-bar {
@@ -249,7 +299,77 @@ div.bar {
 }
 
 
+////////////////NEW POST PAGE//////////////////
 
+h1 {
+  text-align: center;
+  font-family: 'Karla', sans-serif;
+  font-size: 50px;
+
+}
+
+.new-post {
+  background-color: #002738;
+  color: white;
+  text-align: center;
+  font-family: 'Karla', sans-serif;
+}
+
+///// modal for login/signup notification ///
+
+.modalDialog {
+    position: fixed;
+    font-family: 'Karla', sans-serif;
+    color: tomato;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.modalDialog:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.modalDialog > div {
+    width: 400px;
+    height: 300px;
+    position: relative;
+    margin: 10% auto;
+    padding: 5px 20px 13px 20px;
+    border-radius: 10px;
+    background: #fff;
+    // background: -moz-linear-gradient(#fff, #999);
+    // background: -webkit-linear-gradient(#fff, #999);
+    // background: -o-linear-gradient(#fff, #999);
+}
+.close {
+    background: tomato;
+    color: #002738;
+    line-height: 30px;
+    position: absolute;
+    text-align: center;
+    right: 170px;
+    top: 200px;
+    width: 40px;
+    text-decoration: none;
+    font-weight: bold;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    -moz-box-shadow: 1px 1px 3px #000;
+    -webkit-box-shadow: 1px 1px 3px #000;
+    box-shadow: 1px 1px 3px #000;
+}
+.close:hover {
+    background: #00d9ff;
+}
 
 
 
