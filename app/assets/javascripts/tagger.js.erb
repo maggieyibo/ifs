@@ -40,13 +40,15 @@ function Tagger () {
       }
     }
 
-    this.tags.push({
+    var tag = {
       id: tag.id,
       name: tag.name,
       x: sliderX + sliderW / 2,
       y: sliderY - thumbH / 2 + sliderH / 2,
       weight: 50
-    });
+    };
+
+    this.tags.push(tag);
 
     var drag = d3.behavior.drag()
         .origin(function(d) { return d; })
@@ -71,6 +73,7 @@ function Tagger () {
           .attr('class', 'tagger-slider-thumb')
           .attr('width', thumbW)
           .attr('height', thumbH)
+          .attr('cursor', 'pointer')
           .attr('x', function(d) { return d.x; })
           .attr('y', function(d) { return d.y; })
           .call(drag);
@@ -110,10 +113,13 @@ function Tagger () {
       var tY = d3.transform(thumbTxt.attr("transform")).translate[1];
 
       // calculate the weight
-      thumbTxt.weight = Math.round( (x-sliderX) / (sliderW - thumbW) * 100 );
+      tagWeight = Math.round( (x-sliderX) / (sliderW - thumbW) * 100 );
       thumbTxt
           .attr('transform', 'translate(' + (x - 5) + ', ' + tY + ')')
-          .text( thumbTxt.weight );
+          .text( tagWeight );
+
+      tag.weight = tagWeight;
+      piechart.updateVals();
 
     }
   };

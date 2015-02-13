@@ -5,41 +5,32 @@
  */
 function Piechart () {
 
-  var colors = [ 
-    "#7e3838", 
-    "#7a387e",
-    "#4d387e", 
-    "#38507e", 
-    "#386a7e", 
-    "#387e6a", 
-    "#387e45",
-    "#587e38", 
-    "#7c7e38", 
-    "#7e6538" 
+  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e", 
+                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538" 
   ];
   var pie = null;
+  var width = 590,
+      height = 600;
+  var butX = width/2,
+      butY = 252,
+      butR = 80;
 
+  // create the svg to draw in
+  var svg = d3.select('#pie-chart')
+      .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('id', 'pie-svg');
 
+  // draw an empty circle
+  // svg.append('circle')
+  //       .attr('cx', butX)
+  //       .attr('cy', butY)
+  //       .attr('r', 200);
   /**
-   * Called when just the values of existing tags changes
-   * (no animation)
+   * Gets the data from tagger and set it up for pie chart
    */
-  this.updateVals = function() {
-    pie.updateProp("effects.load.effect", "none");
-  };
-
-  /**
-   * Called whenever a tag is added or removed from the list
-   * (full animation)
-   */
-  this.updateTagList = function() {
-    
-    // if there are no tags
-    if (tagger.tags.length === 0) {
-      // draw an empty circle
-      return;
-    }
-
+  var setData = function() {
     var data = [];
     
     for (var i=0 ; i < tagger.tags.length ; i++ ) {
@@ -49,26 +40,91 @@ function Piechart () {
         color: colors[i]
       });
     }
+    return data;
+  }
 
+
+  var handleClick = function() {
+    if (d3.event.defaultPrevented) 
+      return; // click suppressed
+    bubble.search();
+  };
+
+
+
+  /**
+   * Called when just the values of existing tags changes
+   * (no animation)
+   */
+  this.updateVals = function() {
+    var data = setData();
+    pie.updateProp("effects.load.effect", "none");
+    pie.updateProp("data.content", data);
+    
+    svg.append('g')
+            .attr('class', 'button')
+            .attr('cursor', 'pointer')
+          .append('circle')
+            .on('click',handleClick)
+            .attr('cx', butX)
+            .attr('cy', butY)
+            .attr('r', butR);
+
+  };
+
+  /**
+   * Called whenever a tag is added or removed from the list
+   * (full animation)
+   */
+  this.updateTagList = function() {
+
+    // if there are no tags
+    if (tagger.tags.length === 0) {
+      return;
+    }
+
+    var data = setData();
+    
     // if we have already made the pie chart
     if (pie) {
 
       // switch to animation mode 
-      // pie.updateProp("effects.load.effect", "default");
+      pie.updateProp("effects.load.effect", "default");
 
       // update the data
       pie.updateProp("data.content", data);
 
+      svg.append('g')
+            .attr('class', 'button')
+            .attr('cursor', 'pointer')
+          .append('circle')
+            .on('click',handleClick)
+            .attr('cx', butX)
+            .attr('cy', butY)
+            .attr('r', butR);
+
     } else {
+
+      // add the button
+      svg.append('g')
+            .attr('class', 'button')
+            .attr('cursor', 'pointer')
+          .append('circle')
+            .on('click',handleClick)
+            .attr('cx', butX)
+            .attr('cy', butY)
+            .attr('r', butR);
+
+      
       // create the chart
-      pie = new d3pie("#pie-chart", {
+      pie = new d3pie("#pie-svg", {
         "size": {
-          "canvasWidth": 590,
+          "canvasWidth": width,
           "pieInnerRadius": "66%",
           "pieOuterRadius": "90%"
         },
         data: {
-          "sortOrder": "value-desc",
+          sortOrder: "null",
           content: data,
         },
         "labels": {
@@ -95,11 +151,14 @@ function Piechart () {
             "color": "#ffffff"
           }
         },
-        "effects": {
+        effects: {
           "pullOutSegmentOnClick": {
             "effect": "linear",
             "speed": 400,
-            "size": 8
+            "size": 12
+          },
+          load: {
+            effect: "default"
           }
         },
         "misc": {
@@ -114,8 +173,5 @@ function Piechart () {
       });
 
     }     
-    
-
   } // end updateTagList
-  this.updateTagList();
 } // end Piechart

@@ -1968,6 +1968,8 @@ var tt = {
 			case "effects.pullOutSegmentOnClick.size":
 			case "effects.highlightSegmentOnMouseover":
 			case "effects.highlightLuminosity":
+			// focomoso: adding effects.load.effect to the no redraw list
+			case "effects.load.effect":
 				helpers.processObj(this.options, propKey, value);
 				break;
 
