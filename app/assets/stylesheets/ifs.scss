@@ -46,9 +46,9 @@ div {
 // style for tag list //
 #tag-list {
   // background-color: grey;
-  height: 600px;
+  height: 480px;
   text-align: left;
-  padding-top: 30px;
+  // padding-top: 30px;
   padding-left: 40px;
   font-family: 'Karla', sans-serif;
   font-size: 14px;
@@ -56,33 +56,46 @@ div {
   overflow: auto;
 }
 
+.container-div {
+  height: 600px;
+  padding-top: 30px;
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  color: white;
+  // overflow: auto;
+
+}
+
 #searchbox {
   border-style: solid;
-  padding-left: 20px;
+  margin-left: 40px;
   border-radius: 2px;
 }
 
 #selection-text {
    position: absolute;
+   padding-left: 47px;
 }
 
 #box-text {
+  padding-left: 40px;
  
 }
 
 #pie-chart {
   // background-color: grey;
-  height: 600px;
+  height: 570px;
+
 }
 
 #bubble {
   // background-color: grey;
-  height: 600px;
+  height: 590px;
 }
 
 #post-view {
   // background-color: grey;
-  height: 600px;
+  height: 570px;
 }
 
 .gnd {
@@ -97,7 +110,7 @@ div {
 
 #tagger-div {
   // background-color: grey;
-  height: 600px;
+  height: 550px;
   padding-top: 30px;
   padding-left: 40px;
   font-family: 'Karla', sans-serif;
