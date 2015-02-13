@@ -5,7 +5,7 @@
  */
 function Piechart () {
 
-  this.colors = [ 
+  var colors = [ 
     "#7e3838", 
     "#7a387e",
     "#4d387e", 
@@ -47,7 +47,7 @@ function Piechart () {
       data.push({
         label: tagger.tags[i].name,
         value: tagger.tags[i].weight,
-        color: this.colors[i]
+        color: colors[i]
       });
     }
 
@@ -55,27 +55,6 @@ function Piechart () {
       pie.updateProp("data.content", data);
     } else {
       pie = new d3pie("#pie-chart", {
-        header: { // kill
-          "title": {
-            "text": "Weighted Tags",
-            "color": "#dfdfdf",
-            "fontSize": 24,
-            "font": "helvetica"
-          },
-          "subtitle": { // kill
-            "text": "The full, weighted list of tags to search for",
-            "color": "#999999",
-            "fontSize": 12,
-            "font": "open sans"
-          },
-          "titleSubtitlePadding": 9
-        },
-        "footer": {
-          "color": "#999999",
-          "fontSize": 10,
-          "font": "open sans",
-          "location": "bottom-left"
-        },
         "size": {
           "canvasWidth": 590,
           "pieInnerRadius": "66%",
