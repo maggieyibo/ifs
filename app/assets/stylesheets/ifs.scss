@@ -48,8 +48,10 @@ div {
   // background-color: grey;
   height: 600px;
   text-align: left;
-  padding-left: 30px;
+  padding-top: 30px;
+  padding-left: 40px;
   font-family: 'Karla', sans-serif;
+  font-size: 14px;
   color: white;
   overflow: auto;
 }
@@ -60,9 +62,12 @@ div {
   border-radius: 2px;
 }
 
-#tagger-div {
-  // background-color: grey;
-  height: 600px;
+#selection-text {
+   position: absolute;
+}
+
+#box-text {
+ 
 }
 
 #pie-chart {
@@ -90,6 +95,17 @@ div {
 // tagger //
 ////////////
 
+#tagger-div {
+  // background-color: grey;
+  height: 600px;
+  padding-top: 30px;
+  padding-left: 40px;
+  font-family: 'Karla', sans-serif;
+  color: white;
+  font-size: 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
 .tagger-slider-bar {
   fill: #00ffff;
@@ -103,6 +119,20 @@ div {
 .tagger-slider-thumb:hover {
   fill: #ff9933;
   stroke: #ff0000;
+}
+
+//label of tagger-slider//
+.tagger-slider-label {
+  fill: white;
+}
+//num on slider//
+.tagger-slider-num {
+  fill: white;
+
+}
+//each of the tag bar//
+.tagger-svg {
+
 }
 ////////////
 // bubble //
