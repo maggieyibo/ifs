@@ -22,6 +22,11 @@ function Tagger () {
 
   this.addTag = function(tag) {
     
+    // only allow 10 tags
+    if ( this.tags.length >= 10 ) {
+      return;
+    }
+
     this.tags.push({
       id: tag.id,
       name: tag.name,
@@ -78,6 +83,8 @@ function Tagger () {
           .text('50')
           .attr('class', 'tagger-slider-num')
           .attr('transform', 'translate(' + (sliderX + sliderW / 2 - 5) + ', ' + (sliderY + sliderH + thumbH + 4)+ ')');
+
+    piechart.updateTagList();
 
     function dragmove(d) {
       var x = Math.max(sliderX, Math.min(sliderX + sliderW - thumbW, d3.event.x));

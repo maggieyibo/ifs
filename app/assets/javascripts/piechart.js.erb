@@ -5,10 +5,8 @@
  */
 function Piechart () {
 
-  this.color = d3.scale.ordinal()
-    .range([  "#7e3838", "#7e6538", "#7c7e38", "#587e38", "#387e45",
-              "#387e6a", "#386a7e", "#38507e", "#4d387e", "#7a387e"])
-    .domain([0,1,2,3,4,5,6,7,8,9]);
+  this.colors = [ "#7e3838", "#7e6538", "#7c7e38", "#587e38", "#387e45",
+                  "#387e6a", "#386a7e", "#38507e", "#4d387e", "#7a387e"];
 
 
 
@@ -25,22 +23,33 @@ function Piechart () {
    * (full animation)
    */
   this.updateTagList = function() {
-    tagger.tags;
-    var data = [
-      { label: "funny", value: 1, color: "#7e3838"},
-      { label: "pics", value: 4, color: "#587e38"},
-      { label: "gifs", value: 3, color: "#38507e"}
-    ];
+    
+    // if there are no tags
+    if (tagger.tags.length < 1) {
+      // draw an empty circle
+      return;
+    }
 
+
+    var data = [];
+    
+    for (var i=0 ; i < tagger.tags.length ; i++ ) {
+      data.push({
+        label: tagger.tags[i].name,
+        value: tagger.tags[i].weight,
+        color: this.colors[i]
+      });
+    }
+    
     var pie = new d3pie("#pie-chart", {
-      header: {
+      header: { // kill
         "title": {
           "text": "Weighted Tags",
           "color": "#dfdfdf",
           "fontSize": 24,
           "font": "helvetica"
         },
-        "subtitle": {
+        "subtitle": { // kill
           "text": "The full, weighted list of tags to search for",
           "color": "#999999",
           "fontSize": 12,
