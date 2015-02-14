@@ -7,7 +7,7 @@ RSpec.describe IfsController, :type => :controller do
       expect(response).to be_success
     end
 
-    it "returns post_tag_weights from within posts" do
+    it "returns score given search_tag_weights" do
       post = Post.new(title: "Funny article title", body: "This is a funny paragraph")
 
       post.post_tag_weights << PostTagWeight.new(weight: 55)
@@ -20,9 +20,11 @@ RSpec.describe IfsController, :type => :controller do
 
       post.save
 
-      expect(post.post_tag_weights[0].weight).to eq(55)
-      expect(post.post_tag_weights[1].weight).to eq(25)
-      expect(post.post_tag_weights[2].weight).to eq(20)
+      search_tag_weights = [70,10,20]
+
+      score = post.post_tag_weights[0].weight * search_tag_weights[0] + post.post_tag_weights[1].weight * search_tag_weights[1] + post.post_tag_weights[2].weight * search_tag_weights[2]
+
+      expect(score).to eq(4500)
     end
 
   end
