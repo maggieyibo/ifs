@@ -146,6 +146,15 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .append("circle")
                 .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
                 .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.score/100} )
+                .on("mouseover", function(d) {
+
+                  d3.select('#post-title')
+                    .text(d.post_title);
+                  
+                  d3.select('#post-body')
+                    .text(d.post_body);
+                    
+                })
                 .call(force.drag);
 
   //////////
