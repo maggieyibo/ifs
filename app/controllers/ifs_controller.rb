@@ -10,12 +10,15 @@ class IfsController < ApplicationController
     post_weights_array = []
     
     search_weights = []
+    
 
+    # split the tag weights into an array
     params[:tagWeights].split(',').each do |o|
       search_weights << o
     end
     
     posts = Post.all
+
 
     posts.each do |p|
       score = 0
@@ -33,6 +36,10 @@ class IfsController < ApplicationController
     end
 
     render json: post_weights_array
+
+    puts "Tag Weights: #{params[:tagWeights]}"
+    puts "Number of posts: #{posts.length}"
+
   end
 
 end
