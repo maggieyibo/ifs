@@ -4,7 +4,7 @@ html, body {
 
 // pure css for grid testing
 div {
-  border: 1px solid #f9daa4;
+  // border: 1px solid #f9daa4;
   box-sizing: border-box;
 
 
@@ -317,7 +317,7 @@ h1 {
 
 ///// modal for login/signup notification ///
 
-.modalDialog {
+.loginDialog {
     position: fixed;
     font-family: 'Karla', sans-serif;
     color: tomato;
@@ -333,18 +333,19 @@ h1 {
     transition: opacity 400ms ease-in;
     pointer-events: none;
 }
-.modalDialog:target {
+.loginDialog:target {
     opacity:1;
     pointer-events: auto;
 }
-.modalDialog > div {
-    width: 400px;
-    height: 300px;
+.loginDialog > div {
+    width: 430px;
+    height: 380px;
     position: relative;
     margin: 10% auto;
-    padding: 5px 20px 13px 20px;
+    padding: 5px 20px 30px 20px;
     border-radius: 10px;
-    background: #fff;
+    background: #002738;
+    font-size: 20px;
     // background: -moz-linear-gradient(#fff, #999);
     // background: -webkit-linear-gradient(#fff, #999);
     // background: -o-linear-gradient(#fff, #999);
@@ -355,8 +356,8 @@ h1 {
     line-height: 30px;
     position: absolute;
     text-align: center;
-    right: 170px;
-    top: 200px;
+    right: -12px;
+    top: -10px;
     width: 40px;
     text-decoration: none;
     font-weight: bold;
