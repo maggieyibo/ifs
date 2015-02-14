@@ -33,6 +33,8 @@
 
     <div class="pure-u-12-24 container-div">
       <div id="post-view">
+        <div id="post-title">This is the post title...</div>
+        <div id="post-body">This is the body of the post.</div>
       </div>
     </div>
 </div> 
@@ -43,5 +45,5 @@
   var AUTH_TOKEN = '<%= "#{form_authenticity_token.inspect}" %>';
 </script>
 
-<!-- include this here so d3 has access to the DOM -->
+<!-- include the main ifs.js file (here so d3 has access to the DOM) -->
 <%= javascript_include_tag "ifs" %>
