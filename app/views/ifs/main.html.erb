@@ -38,6 +38,10 @@
 </div> 
 
 
-<!-- include this here so d3 has access to the DOM -->
-<%= javascript_include_tag 'ifs' %>
+<script>
+  // set the authenticity token
+  var AUTH_TOKEN = '<%= "#{form_authenticity_token.inspect}" %>';
+</script>
 
+<!-- include this here so d3 has access to the DOM -->
+<%= javascript_include_tag "ifs" %>
