@@ -13,14 +13,21 @@ class PostsController < ApplicationController
 
 	def new
 	  @post = Post.new
-    # @tags = Tag.all
+    @tags = Tag.all
 	end
 
 	def create
 	  @post = Post.new(post_params)
+	  @tags= Tag.all
+
+	  params[:post].tags.split(',').each do |t|
+      tags << t
+    end
+
+    find_by[:ta]
 
 	  if @post.save
-	  	redirect_to main_path
+	  	redirect_to posts_path
 	  else
 	  	render :new
 	  end    
