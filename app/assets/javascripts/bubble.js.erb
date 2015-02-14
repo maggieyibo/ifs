@@ -41,7 +41,7 @@ Bubble.prototype.search = function() {
 
   // send the data to server search action
   queue()
-    .defer(d3.json, "/search?" + qStr)
+    .defer(d3.json, "/search?authenticity_token=" + AUTH_TOKEN + "&" + qStr)
     .await(_this.makeBubble); 
 };
 
