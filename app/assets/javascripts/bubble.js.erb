@@ -55,6 +55,9 @@ Bubble.prototype.makeBubble = function(error, data) {
     return;
   }
 
+  // clear the bubble
+  d3.select('#bubble-svg').html('');
+
   var tagNodeRadius = 80;
 
   // add the tagger (search weights) as the root node
