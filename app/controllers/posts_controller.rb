@@ -13,7 +13,8 @@ class PostsController < ApplicationController
 
 	def new
 	  @post = Post.new
-    @tags = Tag.all
+	  # note: getting this via an ajax call, not erb
+    # @tags = Tag.all
 	end
 
 	def create
@@ -30,7 +31,7 @@ class PostsController < ApplicationController
 	  	redirect_to posts_path
 	  else
 	  	render :new
-	  end    
+	  end
 	end
 
 	def edit
