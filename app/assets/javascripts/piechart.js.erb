@@ -23,11 +23,6 @@ function Piechart () {
         .attr('height', height)
         .attr('id', 'pie-svg');
 
-  // draw an empty circle
-  // svg.append('circle')
-  //       .attr('cx', butX)
-  //       .attr('cy', butY)
-  //       .attr('r', 200);
   /**
    * Gets the data from tagger and set it up for pie chart
    */
@@ -46,9 +41,14 @@ function Piechart () {
 
 
   var handleClick = function() {
+
     if (d3.event.defaultPrevented)
       return; // click suppressed
-    bubble.search();
+
+    // only call search if we're in 'search' mode
+    // if we're in 'post' mode, the tagger handles the string
+    if (mode == 'search')
+      bubble.search();
   };
 
 
