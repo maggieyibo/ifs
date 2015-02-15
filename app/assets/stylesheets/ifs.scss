@@ -107,7 +107,7 @@ div {
 // }
 
 //// landing page fadeoutright ////
-#fadeout {
+#taglist-fadeout {
   padding-bottom: 100px;
   height: 600px;
   width: 1180px;
@@ -119,7 +119,19 @@ div {
   position: fixed; top: 105px; left: 120px; 
 }
 
-#fadeout-message {
+#tagger-fadeout {
+  padding-bottom: 100px;
+  height: 600px;
+  width: 800px;
+  border-radius: 10px;
+  border: solid 2px white;
+  margin-left: 10%;
+  background: #002738;
+  // opacity: 0.4;
+  position: fixed; top: 105px; left: 550px; 
+}
+
+.fadeout-message {
   padding-top: 170px;
   text-align: center;
   font-family: 'Righteous', cursive;

@@ -48,9 +48,17 @@ function TagList () {
   }
 
   function handleClick(evt) {
-   
-      $('#fadeout').removeClass().addClass('animated fadeOutRightBig');
-    tagger.addTag(evt)
+    switch (screenState) {
+      case 0: 
+        $('#taglist-fadeout').removeClass().addClass('animated fadeOutRightBig');
+        screenState = 1;
+        break;
+      case 1:
+        $('#tagger-fadeout').removeClass().addClass('animated fadeOutRightBig');
+        screenState = 2;
+        break;
+   }
+    tagger.addTag(evt);
   }
 }
 
