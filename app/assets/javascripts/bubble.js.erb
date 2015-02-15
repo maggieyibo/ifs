@@ -5,12 +5,13 @@
 * @constructor
 */
 function Bubble () {
-  _this = this;
+  var _this = this;
+
   this.nodes = [];
   this.edges = null;
   this.data = null;
   this.arcs = null;
-  
+
   // set a color scale (look at color brewer for better selections)
   // this.color = d3.scale.ordinal()
   //   .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
@@ -23,165 +24,181 @@ function Bubble () {
   this.w = this.svg.attr("width");
   this.h = this.svg.attr("height");
 
-  //this.search();
-}
+  // send the weighted tags to the server
+  this.search = function() {
 
-Bubble.prototype.search = function() {
-  if (tagger.tags.length < 1) {
-    console.warn("Must set some tags before searching!");
-    return;
-  }
+    if (tagger.tags.length < 1) {
+      console.warn("Must set some tags before searching!");
+      return;
+    }
 
-  // "tagWeights=1:40,2:10,3:50"
-  var qStr = "tagWeights=";
-  for (var i=0 ; i < tagger.tags.length ; i++ ) {
-    qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
-  }
-  qStr = qStr.substring(0, qStr.length - 1);
+    // "tagWeights=1:40,2:10,3:50"
+    var qStr = "tagWeights=";
+    for (var i=0 ; i < tagger.tags.length ; i++ ) {
+      qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
+    }
+    qStr = qStr.substring(0, qStr.length - 1);
 
-  // send the data to server search action
-  queue()
-    .defer(d3.json, "/search?" + qStr)
-    .await(_this.makeBubble); 
-};
+    // send the data to server search action
+    queue()
+      .defer(d3.json, "/search?authenticity_token=" + AUTH_TOKEN + "&" + qStr)
+      .await(_this.makeBubble);
+  };
 
-// Bubble.makeBubble
-// makes the force-direction layout from the given node data
-Bubble.prototype.makeBubble = function(error, data) {
+  // Bubble.makeBubble
+  // makes the force-direction layout from the given node data
+  this.makeBubble = function(error, data) {
 
-  // handle error
-  if (error) {
-    console.warn(error);
-    return;
-  }
+    // handle error
+    if (error) {
+      console.warn(error);
+      return;
+    }
 
-  var tagNodeRadius = 80;
+    // clear the bubble
+    d3.select('#bubble-svg').html('');
 
-  // add the tagger (search weights) as the root node
-  data.unshift({0:0});
-  data[0].weight = 10000;
+    var tagNodeRadius = 80;
 
-  // create links from search to the nodes
-  var links = [];
-  for (i=0;i<data.length-1;i++) {
-    links[i] = {"source": 0, "target": i+1 };
-  }
+    // add the tagger (search weights) as the root node
+    data.unshift({0:0});
+    data[0].weight = 10000;
 
-  //////////////////
-  // force layout //
-  //////////////////
-  
-  var force = d3.layout.force()
-                .nodes(data)
-                .links(links)
-                .size([_this.w,_this.h])
-                .linkDistance(function(d) { return 210-d.target.score/100; } )
-                .charge(function(d,i) { return i==0 ? -1000 : - d.score ; } )
-                .gravity(0.3)
-                .start();
+    // create links from search to the nodes
+    var links = [];
+    for (i=0;i<data.length-1;i++) {
+      links[i] = {"source": 0, "target": i+1 };
+    }
 
- 
-  // add the edges
-  _this.edges = _this.svg.selectAll("line")
-                .data(links)
-              .enter()
-                .append("line")
-                .attr('class', 'post-line');
+    //////////////////
+    // force layout //
+    //////////////////
+
+    var force = d3.layout.force()
+                  .nodes(data)
+                  .links(links)
+                  .size([_this.w,_this.h])
+                  .linkDistance(function(d) { return 210-d.target.score/100; } )
+                  .charge(function(d,i) { return i==0 ? -1000 : - d.score ; } )
+                  .gravity(0.3)
+                  .start();
 
 
-  ///////////////
-  // pie chart //
-  ///////////////
+    // add the edges
+    _this.edges = _this.svg.selectAll("line")
+                  .data(links)
+                .enter()
+                  .append("line")
+                  .attr('class', 'post-line');
 
-  var dataset = [];
-  for (var i = 0 ; i < tagger.tags.length ; i++) {
-    dataset[i] = tagger.tags[i].weight;
-  }
 
-  var outerRadius = tagNodeRadius;
-  var innerRadius = 0;
-  var arc = d3.svg.arc()
-          .innerRadius(innerRadius)
-          .outerRadius(outerRadius);
-  
-  var pie = d3.layout.pie();
-  
-  // Easy colors accessible via a 10-step ordinal scale
-  var color = d3.scale.category20b();
+    ///////////////
+    // pie chart //
+    ///////////////
 
-  
-  // Set up groups
-  _this.arcs = _this.svg.selectAll("g.arc")
-          .data(pie(dataset))
-          .enter()
-          .append("g")
-          .attr("class", "arc")
-          .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
-  
-  // Draw arc paths
-  _this.arcs.append("path")
-      .attr("fill", function(d, i) {
-        return color(i);
-      })
-      .attr("d", arc);
-      
-  
-  // Labels
-  _this.arcs.append("text")
-      .attr("transform", function(d) {
-        return "translate(" + arc.centroid(d) + ")";
-      })
-      .attr("text-anchor", "middle")
-      .text(function(d,i) {
-        return tagger.tags[i].name;
+    var dataset = [];
+    for (var i = 0 ; i < tagger.tags.length ; i++) {
+      dataset[i] = tagger.tags[i].weight;
+    }
+
+    var outerRadius = tagNodeRadius;
+    var innerRadius = 0;
+    var arc = d3.svg.arc()
+            .innerRadius(innerRadius)
+            .outerRadius(outerRadius);
+
+    var pie = d3.layout.pie();
+
+    // Easy colors accessible via a 10-step ordinal scale
+    var color = d3.scale.category20b();
+
+
+    // Set up groups
+    _this.arcs = _this.svg.selectAll("g.arc")
+            .data(pie(dataset))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+
+    // Draw arc paths
+    _this.arcs.append("path")
+        .attr("fill", function(d, i) {
+          return color(i);
+        })
+        .attr("d", arc);
+
+
+    // Labels
+    _this.arcs.append("text")
+        .attr("transform", function(d) {
+          return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr("text-anchor", "middle")
+        .text(function(d,i) {
+          return tagger.tags[i].name;
+        });
+
+
+    ///////////
+    // nodes //
+    ///////////
+    _this.nodes = _this.svg.selectAll("circle")
+                  .data(data)
+                .enter()
+                  .append("circle")
+                  .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
+                  .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.score/100} )
+                  .on("mouseover", function(d) {
+
+                    d3.select('#post-title')
+                      .text(d.post_title);
+
+                    d3.select('#post-body')
+                      .text(d.post_body);
+
+                  })
+                  .call(force.drag);
+
+    //////////
+    // text //
+    //////////
+
+    // var labels = _this.svg.selectAll("text")
+    //               .data(data)
+    //               .enter()
+    //               .append("text")
+    //               .text(function(d) { return d.post_title; });
+
+    //////////
+    // tick //
+    //////////
+    force.on("tick", function() {
+
+      // edges
+      _this.edges.attr("x1", function(d) { return d.source.x; })
+           .attr("y1", function(d) { return d.source.y; })
+           .attr("x2", function(d) { return d.target.x; })
+           .attr("y2", function(d) { return d.target.y; });
+
+      // nodes
+      _this.nodes.attr('transform', function(d,i) {
+        if (i==0) {
+          // move the pie chart along with the root node
+          _this.arcs.attr('transform', 'translate(' + d.x + ',' + d.y + ')');
+        }
+        return 'translate(' + d.x + ',' + d.y + ')';
       });
 
+      // text
+      // labels.attr("transform", function(d) {
+      //         return "translate(" + d.x + "," + d.y + ")";
+      //     });
 
-  ///////////
-  // nodes //
-  ///////////
-  _this.nodes = _this.svg.selectAll("circle")
-                .data(data)
-              .enter()
-                .append("circle")
-                .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
-                .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.score/100} )
-                .call(force.drag);
-
-  //////////
-  // text //
-  //////////
-
-  // var labels = _this.svg.selectAll("text")
-  //               .data(data)
-  //               .enter()
-  //               .append("text")
-  //               .text(function(d) { return d.post_title; });
-
-  //////////
-  // tick //
-  //////////
-  force.on("tick", function() {
-
-    // edges
-    _this.edges.attr("x1", function(d) { return d.source.x; })
-         .attr("y1", function(d) { return d.source.y; })
-         .attr("x2", function(d) { return d.target.x; })
-         .attr("y2", function(d) { return d.target.y; });
-
-    // nodes
-    _this.nodes.attr('transform', function(d,i) { 
-      if (i==0) {
-        // move the pie chart along with the root node
-        _this.arcs.attr('transform', 'translate(' + d.x + ',' + d.y + ')'); 
-      }
-      return 'translate(' + d.x + ',' + d.y + ')'; 
     });
+  };
 
-    // text
-    // labels.attr("transform", function(d) {
-    //         return "translate(" + d.x + "," + d.y + ")";
-    //     });
+}
 
-  });
-};
+
+

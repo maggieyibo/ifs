@@ -4,12 +4,12 @@
  * @constructor
  */
 function Tagger () {
-  _this = this;
+  var _this = this;
 
   var svgWidth = 400,
       svgHeight = 54;
 
-  var sliderX = 40, 
+  var sliderX = 40,
       sliderY = 24,
       sliderW = 300,
       sliderH = 4;
@@ -20,22 +20,183 @@ function Tagger () {
   var labelX = 10,
       labelY = 9;
 
+  var delX = 14,
+      delY = sliderY + sliderH/2,
+      delR = 6;
+
+  var maxTags = 9;
+
+  var leftX = sliderX + thumbW/2;
+  var rightX = sliderX + sliderW - thumbW/2;
+
   // The tags that have been set by the user
   this.tags = [];
 
+  /**
+   * If in new post mode, updates the hidden fieldd in the form
+   */
+  this.updateTagString = function() {
+    if (mode == 'search') {
+      return;
+   } else if (mode == 'post') {
+      // if we're in 'post' mode, create the string
+
+      var searchTagWeights = '';
+
+      var qStr = "";
+      for (var i=0 ; i < tagger.tags.length ; i++ ) {
+        qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
+      }
+      qStr = qStr.substring(0, qStr.length - 1);
+
+
+      d3.select('#post_tag_weights')
+        .attr('value', qStr);
+      console.log(qStr);
+    }
+  }
+
+  /**
+   * Called whenever the number of tags changes
+   */
+  this.updateTags = function() {
+
+    // clear all existing
+    d3.select('#tagger-div').html('');
+
+    // create the d3 drag behavior
+    var drag = d3.behavior.drag()
+        .origin(function(d) { return d; })
+        .on("drag", dragmove);
+
+    // create the svg
+    var svg = d3.select('#tagger-div').selectAll('svg')
+        .data(_this.tags)
+      .enter().append("svg")
+        .attr('class', 'tagger-svg')
+        .attr("width", svgWidth)
+        .attr("height", svgHeight);
+
+    // create the delet button
+    svg.append('circle')
+          .attr('class', 'tagger-delete-button')
+          .attr('fill', '#aa4040')
+          .attr('cx', delX)
+          .attr('cy', delY)
+          .attr('r', delR)
+          .attr('cursor', 'pointer')
+          .on("mousedown", function(d) {
+            _this.removeTag(d);
+          });
+
+    svg.append('rect')
+          .attr('fill', '#ffffff')
+          .attr('x', delX-3)
+          .attr('y', delY-1.5)
+          .attr('width', delR)
+          .attr('height', delR/2)
+          .attr('rx', 1)
+          .attr('cursor', 'pointer')
+          .on("mousedown", function(d) {
+            _this.removeTag(d);
+          });
+
+    // bar
+    svg.append('rect')
+          .attr('class', 'tagger-slider-bar')
+          .attr("width", sliderW)
+          .attr("height", sliderH)
+          .attr('transform', 'translate(' + sliderX + ', ' + sliderY + ')');
+
+    // thumb and text
+    var g = svg.append('g')
+          .attr('cursor', 'pointer')
+          .attr('transform', function(d) {
+            return 'translate(' + (leftX + (d.weight / 100) * (rightX - leftX) ) + ')';
+          })
+          .call(drag);
+
+    g.append('rect')
+          .attr('class', 'tagger-slider-thumb')
+          .attr('width', thumbW)
+          .attr('height', thumbH)
+          .attr('x', - thumbW/2)
+          .attr('y', sliderY - thumbH / 2 + sliderH / 2);
+
+    g.append('text')
+          .text(function(d) {
+            return d.weight;
+          })
+          .attr('class', 'tagger-slider-num')
+          .attr('x', -8)
+          .attr('y', sliderY + sliderH/2 + thumbH/2 + 13);
+
+
+    // tag label
+    svg.append('text')
+          .text(function(d) { return d.name; } )
+          .attr('class', 'tagger-slider-label')
+          .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
+
+    // slider labels
+    // 0
+    svg.append('text')
+          .text('0')
+          .attr('class', 'tagger-slider-num')
+          .attr('transform', 'translate(' + (sliderX - 14) + ', ' + (sliderY + 7)+ ')');
+
+    // 100
+    svg.append('text')
+          .text('100')
+          .attr('class', 'tagger-slider-num')
+          .attr('transform', 'translate(' + (sliderX + sliderW + 3) + ', ' + (sliderY + 7)+ ')');
+
+    this.updateTagString();
+
+    function dragmove(d) {
+
+      // calc the x
+      var x = Math.max(leftX, Math.min(rightX, d3.event.x));
+
+      d.x = x;
+      d3.select(this)
+          .attr('transform', 'translate(' + x + ')');
+
+      // calculate the weight
+      var tagWeight = Math.round( (x-leftX) / (rightX - leftX) * 100 );
+
+      // d3pie doesn't like 0% data in the chart
+      if (tagWeight < 1)
+        tagWeight = 1;
+
+      d.weight = tagWeight;
+      piechart.updateVals();
+
+      d3.select(this).select('text').text(tagWeight);
+      _this.updateTagString();
+
+    } // dragMove
+
+  }; // end updateTags
+
+  /**
+   * Add a new tag to the list
+   * @param {d3Object} tag [description]
+   */
   this.addTag = function(tag) {
-    
-    // only allow n tags
-    var allowedTags = 9;
-    if ( this.tags.length >= allowedTags ) {
+
+    // check for too many tags
+    var allowedTags = maxTags;
+    if ( _this.tags.length >= allowedTags ) {
       alert("Sorry, you can only search on " + allowedTags + " tags.");
       return;
     }
 
     // check if tag is already in list
-    for (i=0;i<this.tags.length;i++) {
+    for (i=0;i<_this.tags.length;i++) {
       if (tag.id === this.tags[i].id) {
-        alert("You get to search on each tag only once.");
+        alert("You get to search on each tag only once. If you're really interested in " +
+          tag.name + " increase it's value on the slider.");
         return;
       }
     }
@@ -48,79 +209,25 @@ function Tagger () {
       weight: 50
     };
 
-    this.tags.push(tag);
+    _this.tags.push(tag);
 
-    var drag = d3.behavior.drag()
-        .origin(function(d) { return d; })
-        .on("drag", dragmove);
-
-    var svg = d3.select('#tagger-div').selectAll('svg')
-        .data(this.tags)
-      .enter().append("svg")
-        .attr('class', 'tagger-svg')
-        .attr("width", svgWidth)
-        .attr("height", svgHeight);
-
-    // bar
-    svg.append('rect')
-          .attr('class', 'tagger-slider-bar')
-          .attr("width", sliderW)
-          .attr("height", sliderH)
-          .attr('transform', 'translate(' + sliderX + ', ' + sliderY + ')');
-
-    // thumb
-    svg.append('rect')
-          .attr('class', 'tagger-slider-thumb')
-          .attr('width', thumbW)
-          .attr('height', thumbH)
-          .attr('cursor', 'pointer')
-          .attr('x', function(d) { return d.x; })
-          .attr('y', function(d) { return d.y; })
-          .call(drag);
-
-    // tag label
-    svg.append('text')
-          .text(tag.name)
-          .attr('class', 'tagger-slider-label')
-          .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
-
-    // slider labels
-    svg.append('text')
-          .text('0')
-          .attr('class', 'tagger-slider-num')
-          .attr('transform', 'translate(' + (sliderX - 14) + ', ' + (sliderY + 7)+ ')');
-
-    svg.append('text')
-          .text('100')
-          .attr('class', 'tagger-slider-num')
-          .attr('transform', 'translate(' + (sliderX + sliderW + 3) + ', ' + (sliderY + 7)+ ')');
-
-    var thumbTxt = svg.append('text')
-          .text('50')
-          .attr('class', 'tagger-slider-num')
-          .attr('transform', 'translate(' + (sliderX + sliderW / 2 - 5) + ', ' + (sliderY + sliderH + thumbH + 4)+ ')');
+    _this.updateTags();
 
     piechart.updateTagList();
 
-    function dragmove(d) {
-      var x = Math.max(sliderX, Math.min(sliderX + sliderW - thumbW, d3.event.x));
-      
-      // move the thumb
-      d3.select(this)
-          .attr('x', d.x = x);
+  }; // end addTag
 
-      // get the moving text's current Y
-      var tY = d3.transform(thumbTxt.attr("transform")).translate[1];
+  /**
+   * Remove a tag from the list
+   * @param  {d3Object} tag The tag to remove
+   */
+  this.removeTag = function(tag) {
 
-      // calculate the weight
-      tagWeight = Math.round( (x-sliderX) / (sliderW - thumbW) * 100 );
-      thumbTxt
-          .attr('transform', 'translate(' + (x - 5) + ', ' + tY + ')')
-          .text( tagWeight );
+    // remove item from arry (using jQuery because indexOf doesn't work in ie 9 or below)
+    _this.tags.splice($.inArray(tag, _this.tags), 1);
 
-      tag.weight = tagWeight;
-      piechart.updateVals();
 
-    }
-  };
+    _this.updateTags();
+    piechart.updateTagList();
+  }; // end removeTag
 }

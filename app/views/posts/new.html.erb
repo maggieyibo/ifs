@@ -2,10 +2,36 @@
 
 	<h1>New Post</h1>
 
-	<%= form_for @post do |f| %>
-		<h2>Title:</h2> <br>
-	<%= f.text_field :title %><br>
-	<%= f.text_area :body, size: '50x20' %><br>
-	<%= f.submit 'Create Post' %>
-	<% end %>
+
+  <div>
+  	<%= form_for @post do |f| %>
+  	<h2>Title:</h2> <br>
+  	<%= f.text_field :title %><br>
+  	<%= f.text_area :body, size: '50x20' %><br>
+    <%= f.hidden_field :tag_weights, value: '' %>
+  	<%= f.submit 'Create Post' %>
+  	<% end %>
+  </div>
+
+ <div class="pure-u-6-24 container-div">
+      <p id="box-text">CHOOSE YOUR TAGS</p>
+         <input type="text" name="tags" placeholder=" Search" id="searchbox"><br><br>
+          <div id="tag-list">
+          </div>
+  </div>
+  <div class="pure-u-8-24 container-div">
+    <p id="selection-text">YOUR SELECTIONS</p><br>
+
+    <div id="tagger-div">
+    </div>
+  </div>
+  <div class="pure-u-10-24 container-div">
+    <div id="pie-chart">
+    </div>
+  </div>
+
+
+<!-- include the main ifs.js file (here so d3 has access to the DOM) -->
+<%= javascript_include_tag "newpost" %>
+
 </body>
