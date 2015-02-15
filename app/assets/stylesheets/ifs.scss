@@ -194,14 +194,16 @@ div {
   user-select: none;
 }
 
-#searchbox {
-  border-style: solid;
-  margin-left: 40px;
-  border-radius: 2px;
-}
+// #searchbox {
+//   border-style: solid;
+//   margin-left: 40px;
+//   border-radius: 2px;
+// }
 
 #selection-text {
+   color: #ff8000;
    position: absolute;
+   padding-top: 20px;
    padding-left: 47px;
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -213,6 +215,7 @@ div {
 
 #box-text {
   padding-left: 40px;
+  color: #ff8000;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -399,6 +402,9 @@ div.bar {
 	font-size: 15px;
 }
 
+#newpost-text {
+  color: #ff8000;
+}
 
 ////////////////NEW POST PAGE//////////////////
 
