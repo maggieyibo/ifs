@@ -9,7 +9,7 @@ function Tagger () {
   var svgWidth = 400,
       svgHeight = 54;
 
-  var sliderX = 40, 
+  var sliderX = 40,
       sliderY = 24,
       sliderW = 300,
       sliderH = 4;
@@ -26,14 +26,19 @@ function Tagger () {
 
   var maxTags = 9;
 
+  var leftX = sliderX + thumbW/2;
+  var rightX = sliderX + sliderW - thumbW/2;
+
   // The tags that have been set by the user
   this.tags = [];
 
+  /**
+   * Called whenever the number of tags changes
+   */
   this.updateTags = function() {
 
     // clear all existing
     d3.select('#tagger-div').html('');
-
 
     // create the d3 drag behavior
     var drag = d3.behavior.drag()
@@ -55,6 +60,7 @@ function Tagger () {
           .attr('cx', delX)
           .attr('cy', delY)
           .attr('r', delR)
+          .attr('cursor', 'pointer')
           .on("mousedown", function(d) {
             _this.removeTag(d);
           });
@@ -65,7 +71,11 @@ function Tagger () {
           .attr('y', delY-1.5)
           .attr('width', delR)
           .attr('height', delR/2)
-          .attr('rx', 1);
+          .attr('rx', 1)
+          .attr('cursor', 'pointer')
+          .on("mousedown", function(d) {
+            _this.removeTag(d);
+          });
 
     // bar
     svg.append('rect')
@@ -74,15 +84,29 @@ function Tagger () {
           .attr("height", sliderH)
           .attr('transform', 'translate(' + sliderX + ', ' + sliderY + ')');
 
-    // thumb
-    svg.append('rect')
+    // thumb and text
+    var g = svg.append('g')
+          .attr('cursor', 'pointer')
+          .attr('transform', function(d) {
+            return 'translate(' + (leftX + (d.weight / 100) * (rightX - leftX) ) + ')';
+          })
+          .call(drag);
+
+    g.append('rect')
           .attr('class', 'tagger-slider-thumb')
           .attr('width', thumbW)
           .attr('height', thumbH)
-          .attr('cursor', 'pointer')
-          .attr('x', function(d) { return d.x; })
-          .attr('y', function(d) { return d.y; })
-          .call(drag);
+          .attr('x', - thumbW/2)
+          .attr('y', sliderY - thumbH / 2 + sliderH / 2);
+
+    g.append('text')
+          .text(function(d) {
+            return d.weight;
+          })
+          .attr('class', 'tagger-slider-num')
+          .attr('x', -8)
+          .attr('y', sliderY + sliderH/2 + thumbH/2 + 13);
+
 
     // tag label
     svg.append('text')
@@ -91,45 +115,45 @@ function Tagger () {
           .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
 
     // slider labels
+    // 0
     svg.append('text')
           .text('0')
           .attr('class', 'tagger-slider-num')
           .attr('transform', 'translate(' + (sliderX - 14) + ', ' + (sliderY + 7)+ ')');
 
+    // 100
     svg.append('text')
           .text('100')
           .attr('class', 'tagger-slider-num')
           .attr('transform', 'translate(' + (sliderX + sliderW + 3) + ', ' + (sliderY + 7)+ ')');
 
-    var thumbTxt = svg.append('text')
-          .text('50')
-          .attr('class', 'tagger-slider-num')
-          .attr('transform', 'translate(' + (sliderX + sliderW / 2 - 5) + ', ' + (sliderY + sliderH + thumbH + 4)+ ')');
-
     function dragmove(d) {
-      var x = Math.max(sliderX, Math.min(sliderX + sliderW - thumbW, d3.event.x));
-      
-      // move the thumb
-      d3.select(this)
-          .attr('x', d.x = x);
 
-      // get the moving text's current Y
-      var tY = d3.transform(thumbTxt.attr("transform")).translate[1];
+      // calc the x
+      var x = Math.max(leftX, Math.min(rightX, d3.event.x));
+
+      d.x = x;
+      d3.select(this)
+          .attr('transform', 'translate(' + x + ')');
 
       // calculate the weight
-      tagWeight = Math.round( (x-sliderX) / (sliderW - thumbW) * 100 );
-      thumbTxt
-          .attr('transform', 'translate(' + (x - 5) + ', ' + tY + ')')
-          .text( tagWeight );
+      var tagWeight = Math.round( (x-leftX) / (rightX - leftX) * 100 );
+
+      // d3pie doesn't like 0% data in the chart
+      if (tagWeight < 1)
+        tagWeight = 1;
 
       d.weight = tagWeight;
       piechart.updateVals();
 
-    }          
+      d3.select(this).select('text').text(tagWeight);
+
+    } // dragMove
+
   }; // end updateTags
 
   this.addTag = function(tag) {
-    
+
     // check for too many tags
     var allowedTags = maxTags;
     if ( _this.tags.length >= allowedTags ) {
@@ -163,12 +187,12 @@ function Tagger () {
   }; // end addTag
 
   this.removeTag = function(tag) {
-    
+
     // remove item from arry (using jQuery because indexOf doesn't work in ie 9 or below)
     _this.tags.splice($.inArray(tag, _this.tags), 1);
 
 
-    _this.updateTags();    
+    _this.updateTags();
     piechart.updateTagList();
   }; // end removeTag
 
