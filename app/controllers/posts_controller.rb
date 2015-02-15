@@ -13,19 +13,13 @@ class PostsController < ApplicationController
 
 	def new
 	  @post = Post.new
-	  # note: getting this via an ajax call, not erb
-    # @tags = Tag.all
 	end
 
 	def create
-	  @post = Post.new(post_params)
-	  @tags= Tag.all
+	  @post = Post.new(title: post_params[:title], body: post_params[:body])
 
-	  params[:post].tags.split(',').each do |t|
-      tags << t
-    end
-
-    find_by[:ta]
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    puts params[:post][:tag_weights]
 
 	  if @post.save
 	  	redirect_to posts_path
@@ -57,7 +51,7 @@ class PostsController < ApplicationController
 	end
 
 	def post_params
-	  params.require(:post).permit(:title, :body)
+	  params.require(:post).permit(:title, :body, :tag_weights)
 	end
 
 end
