@@ -21,6 +21,8 @@ class PostsController < ApplicationController
     puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
     puts params[:post][:tag_weights]
 
+    
+
 	  if @post.save
 	  	redirect_to posts_path
 	  else
