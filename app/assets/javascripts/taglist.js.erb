@@ -48,7 +48,9 @@ function TagList () {
   }
 
   function handleClick(evt) {
-      tagger.addTag(evt)
+   
+      $('#fadeout').removeClass().addClass('animated fadeOutRightBig');
+    tagger.addTag(evt)
   }
 }
 

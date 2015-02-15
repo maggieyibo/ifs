@@ -1,35 +1,41 @@
 html, body {
   height: 100%; 
 }
+/// styling for main landing page ///
+
+#main {
+  background-color: #002738;
+}
 
 // pure css for grid testing
 div {
   // border: 1px solid #f9daa4;
   box-sizing: border-box;
-
-
 }
+
 ////header style////
 #header {
   text-align: center;
   font-family: 'Righteous', cursive;
-  font-size: 35px;
+  font-size: 40px;
   padding: 15px;
   color: white;
   background-color: #002738;
   height: 70px;
 }
 
+/// FOR•U•ME ///
 .logo {
   margin-right: 200px;
   font-size: 50px;
+  font-family: 'Monoton', cursive;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
+/// navigation bar ///
 #login {
   float: left;
   font-size: 20px;
@@ -63,15 +69,119 @@ div {
   user-select: none;
 }
 
-#main {
-  background-color: #002738;
+/// styling for each container divs ///
+.container-div {
+  height: 600px;
+  padding-top: 30px;
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  color: white;
+  // overflow: auto;
+
 }
-// style for tag list //
+
+//////// landing page fadeout effect upon clicking tag-list ////////
+
+//// left-arrow ////
+.arrow-1 {
+  position: relative;
+  margin-left: 30px;
+  margin-right: auto;
+  top: -100px;
+  width: 0; 
+  height: 0; 
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  border-right: 20px solid #FFF;
+}
+//// arrow stem(currently not using) ////
+// .arrow-1:after {
+//   content: "";
+//   position: absolute;
+//   left: 30px;
+//   top: -12px;
+//   background: #FFF;
+//   width: 60px;
+//   height: 25px;
+//   border-radius: 0 12px 12px 0;
+// }
+
+//// landing page fadeoutright ////
+#fadeout {
+  padding-bottom: 100px;
+  height: 600px;
+  width: 1180px;
+  border-radius: 10px;
+  border: solid 2px white;
+  margin-left: 10%;
+  background: #002738;
+  // opacity: 0.4;
+  position: fixed; top: 105px; left: 120px; 
+}
+
+#fadeout-message {
+  padding-top: 170px;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  font-size: 30px;
+  color: white;
+  opacity: 1.0;
+}
+
+.hide{
+    padding:15px;
+    border-radius:4px;
+    background: white;
+    opacity: 0.4;
+    color: white;
+    text-decoration: none;
+    float:left;
+    margin-right:20px;
+}
+
+.animated { 
+    -webkit-animation-duration: .7s; 
+    animation-duration: .7s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+    -webkit-animation-timing-function: ease-out; 
+    animation-timing-function: ease-out; 
+} 
+ @-webkit-keyframes fadeOutRightBig {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(2000px, 0, 0);
+            transform: translate3d(2000px, 0, 0);
+  }
+}
+
+@keyframes fadeOutRightBig {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translate3d(2000px, 0, 0);
+            transform: translate3d(2000px, 0, 0);
+  }
+}
+
+.fadeOutRightBig {
+  -webkit-animation-name: fadeOutRightBig;
+          animation-name: fadeOutRightBig;
+}
+
+
+/// style for tag list ///
 #tag-list {
   // background-color: grey;
   height: 480px;
   text-align: left;
-  // padding-top: 30px;
   padding-left: 40px;
   font-family: 'Karla', sans-serif;
   font-size: 14px;
@@ -82,16 +192,6 @@ div {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.container-div {
-  height: 600px;
-  padding-top: 30px;
-  font-family: 'Karla', sans-serif;
-  font-size: 14px;
-  color: white;
-  // overflow: auto;
-
 }
 
 #searchbox {
@@ -148,7 +248,11 @@ div {
   height: 100%;
 }
 
-
+#form-container {
+  color: white;
+  font-family: 'Righteous', cursive;
+  font-size: 14px;
+}
 ////////////
 // tagger //
 ////////////
@@ -237,9 +341,6 @@ div {
   stroke-width: 2;  
 }
 
-////////////////////////////////////
-///
-
 
 ////// viewer //////
 
@@ -282,16 +383,16 @@ div.bar {
 //   font-size: 12px;
 // }
 
- // #postbox { 
- // 		position: absolute;
- // 		top: 90px;
- //  	right: 20px;
- // 		width: 580px;
- // 		height: 520px;
- //    padding: 10px;
- //    border-left: 7px double #252525;
- //    margin: 0;
- //  }
+//  #postbox { 
+//  		position: absolute;
+//  		top: 90px;
+//   	right: 20px;
+//  		width: 580px;
+//  		height: 520px;
+//     padding: 10px;
+//     border-left: 7px double #252525;
+//     margin: 0;
+//   }
 
 /* font awesome icons */
 #icons {
@@ -316,6 +417,7 @@ h1 {
 }
 
 ///// modal for login/signup notification ///
+///// current not using, link #open/modal to use /////
 
 .loginDialog {
     position: fixed;
@@ -357,7 +459,7 @@ h1 {
     position: absolute;
     text-align: center;
     right: -12px;
-    top: -10px;
+    top: -10px; 
     width: 40px;
     text-decoration: none;
     font-weight: bold;
