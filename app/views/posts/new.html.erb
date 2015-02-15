@@ -2,33 +2,36 @@
 
 	<h1>New Post</h1>
 
+	<div class="pure-u-7-24">
 
-  <div>
-  	<%= form_for @post do |f| %>
-  	<h2>Title:</h2> <br>
-  	<%= f.text_field :title %><br>
-  	<%= f.text_area :body, size: '50x20' %><br>
-    <%= f.hidden_field :tag_weights, value: '' %>
-  	<%= f.submit 'Create Post' %>
-  	<% end %>
-  </div>
+		<%= form_for @post do |f| %> <br><br>
+		<label id="newpost-text"> Add A Post:</label> <br>
+		<%= f.text_field :title, class: "form-control", placeholder: "Post Title" %> <br><br>
+		<%= f.text_area :body, size: '50x20', class: "form-control", placeholder: "Your Post Here..." %><br>
+		<%= f.hidden_field :tag_weights, value: '' %><br>
+		<%= f.submit 'Create Post', class: "btn btn-success" %>
 
- <div class="pure-u-6-24 container-div">
-      <p id="box-text">CHOOSE YOUR TAGS</p>
-         <input type="text" name="tags" placeholder=" Search" id="searchbox"><br><br>
-          <div id="tag-list">
-          </div>
-  </div>
-  <div class="pure-u-8-24 container-div">
-    <p id="selection-text">YOUR SELECTIONS</p><br>
+		<% end %>
+	</div>
+	<div class="pure-u-1-24"></div>
+	<div class="pure-u-6-24 container-div">
+		<p id="newpost-text">CHOOSE YOUR TAGS</p>
+		<!-- <input type="text" name="tags" placeholder=" Search" id="searchbox"> --><br>
+		<div id="tag-list">
+		</div>
+	</div>
+	<div class="pure-u-8-24 container-div">
+		<p id="newpost-text">YOUR SELECTIONS</p>
 
-    <div id="tagger-div">
-    </div>
-  </div>
-  <div class="pure-u-10-24 container-div">
+		<div id="tagger-div">
+		</div>
+	</div>
+
+
+  <!-- <div class="pure-u-10-24 container-div">
     <div id="pie-chart">
     </div>
-  </div>
+</div> -->
 
 
 <!-- include the main ifs.js file (here so d3 has access to the DOM) -->
