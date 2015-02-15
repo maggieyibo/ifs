@@ -45,10 +45,26 @@ function Piechart () {
     if (d3.event.defaultPrevented)
       return; // click suppressed
 
-    // only call search if we're in 'search' mode
-    // if we're in 'post' mode, the tagger handles the string
-    if (mode == 'search')
+    if (mode == 'search') {
+      // only call search if we're in 'search' mode
       bubble.search();
+
+    } else if (mode == 'post') {
+      // if we're in 'post' mode, create the string
+
+      var searchTagWeights = '';
+
+      var qStr = "";
+      for (var i=0 ; i < tagger.tags.length ; i++ ) {
+        qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
+      }
+      qStr = qStr.substring(0, qStr.length - 1);
+
+
+      d3.select('#post_tag_weights')
+        .attr('value', qStr);
+      console.log(qStr);
+    }
   };
 
 

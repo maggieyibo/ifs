@@ -7,6 +7,7 @@
   	<h2>Title:</h2> <br>
   	<%= f.text_field :title %><br>
   	<%= f.text_area :body, size: '50x20' %><br>
+    <%= f.hidden_field :tag_weights, value: '' %>
   	<%= f.submit 'Create Post' %>
   	<% end %>
   </div>
@@ -28,11 +29,6 @@
     </div>
   </div>
 
-
-<script>
-  // set the authenticity token
-  var AUTH_TOKEN = '<%= "#{form_authenticity_token.inspect}" %>';
-</script>
 
 <!-- include the main ifs.js file (here so d3 has access to the DOM) -->
 <%= javascript_include_tag "newpost" %>
