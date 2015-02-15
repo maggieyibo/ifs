@@ -16,18 +16,57 @@ class PostsController < ApplicationController
 	end
 
 	def create
-	  @post = Post.new(title: post_params[:title], body: post_params[:body])
 
-    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
-    puts params[:post][:tag_weights]
+    # create a new blank post 
+	  post = Post.new(title: post_params[:title], body: post_params[:body])
 
-    
+    # saves a post
+    if post.save
+      
+      # create empty arrays
+      tag_weights = []
+      tag_ids = []
 
-	  if @post.save
-	  	redirect_to posts_path
-	  else
-	  	render :new
-	  end
+      # split the submitted tags and weights with a comma
+      params[:post][:tag_weights].split(',').each do |o|
+
+        # call ids key and weights value
+        key, value = o.split(/:/).map {|num| num.to_i}
+
+        # add all keys into tag_ids array
+        tag_ids << key
+
+        # add all values into tag_weights
+        tag_weights << value
+      end
+
+      # iterate through all tag ids
+      tag_ids.each_with_index do |tid, i|
+
+        # get specific tag by tag id
+        t = Tag.all.find(tid)
+
+        # create a new post_tag_weight with weight from tag_ids
+        ptw = PostTagWeight.create(weight: tag_weights[i])
+
+        # add current post to post_tag_weight
+        ptw.post = post
+
+        # add current tag to post_tag_weight
+        ptw.tag = t
+
+        # save post_tag_weight
+        ptw.save
+
+      end
+      
+      # go to the posts path page once done
+      redirect_to posts_path
+
+    else
+        render :new
+    end
+
 	end
 
 	def edit
