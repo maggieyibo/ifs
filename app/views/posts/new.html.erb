@@ -1,9 +1,9 @@
-<body class="new-post">
+<body class="new-post" id="form-container">
 
 	<h1>New Post</h1>
 
 	<%= form_for @post do |f| %>
-	<h2>Title:</h2> <br>
+		<h2>Title:</h2> <br>
 	<%= f.text_field :title %><br>
 	<%= f.text_area :body, size: '50x20' %><br>
 	<%= f.submit 'Create Post' %>
