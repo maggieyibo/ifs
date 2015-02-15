@@ -33,6 +33,30 @@ function Tagger () {
   this.tags = [];
 
   /**
+   * If in new post mode, updates the hidden fieldd in the form
+   */
+  this.updateTagString = function() {
+    if (mode == 'search') {
+      return;
+   } else if (mode == 'post') {
+      // if we're in 'post' mode, create the string
+
+      var searchTagWeights = '';
+
+      var qStr = "";
+      for (var i=0 ; i < tagger.tags.length ; i++ ) {
+        qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
+      }
+      qStr = qStr.substring(0, qStr.length - 1);
+
+
+      d3.select('#post_tag_weights')
+        .attr('value', qStr);
+      console.log(qStr);
+    }
+  }
+
+  /**
    * Called whenever the number of tags changes
    */
   this.updateTags = function() {
@@ -127,6 +151,8 @@ function Tagger () {
           .attr('class', 'tagger-slider-num')
           .attr('transform', 'translate(' + (sliderX + sliderW + 3) + ', ' + (sliderY + 7)+ ')');
 
+    this.updateTagString();
+
     function dragmove(d) {
 
       // calc the x
@@ -147,11 +173,16 @@ function Tagger () {
       piechart.updateVals();
 
       d3.select(this).select('text').text(tagWeight);
+      _this.updateTagString();
 
     } // dragMove
 
   }; // end updateTags
 
+  /**
+   * Add a new tag to the list
+   * @param {d3Object} tag [description]
+   */
   this.addTag = function(tag) {
 
     // check for too many tags
@@ -186,6 +217,10 @@ function Tagger () {
 
   }; // end addTag
 
+  /**
+   * Remove a tag from the list
+   * @param  {d3Object} tag The tag to remove
+   */
   this.removeTag = function(tag) {
 
     // remove item from arry (using jQuery because indexOf doesn't work in ie 9 or below)
@@ -195,5 +230,4 @@ function Tagger () {
     _this.updateTags();
     piechart.updateTagList();
   }; // end removeTag
-
 }
