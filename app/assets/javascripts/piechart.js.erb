@@ -4,9 +4,10 @@
  * @constructor
  */
 function Piechart () {
+  var _this = this;
 
-  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e", 
-                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538" 
+  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e",
+                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538"
   ];
   var pie = null;
   var width = 590,
@@ -32,7 +33,7 @@ function Piechart () {
    */
   var setData = function() {
     var data = [];
-    
+
     for (var i=0 ; i < tagger.tags.length ; i++ ) {
       data.push({
         label: tagger.tags[i].name,
@@ -45,7 +46,7 @@ function Piechart () {
 
 
   var handleClick = function() {
-    if (d3.event.defaultPrevented) 
+    if (d3.event.defaultPrevented)
       return; // click suppressed
     bubble.search();
   };
@@ -60,7 +61,7 @@ function Piechart () {
     var data = setData();
     pie.updateProp("effects.load.effect", "none");
     pie.updateProp("data.content", data);
-    
+
     svg.append('g')
             .attr('class', 'button')
             .attr('cursor', 'pointer')
@@ -84,11 +85,11 @@ function Piechart () {
     }
 
     var data = setData();
-    
+
     // if we have already made the pie chart
     if (pie) {
 
-      // switch to animation mode 
+      // switch to animation mode
       pie.updateProp("effects.load.effect", "default");
 
       // update the data
@@ -115,7 +116,7 @@ function Piechart () {
             .attr('cy', butY)
             .attr('r', butR);
 
-      
+
       // create the chart
       pie = new d3pie("#pie-svg", {
         "size": {
@@ -172,6 +173,6 @@ function Piechart () {
         }
       });
 
-    }     
+    }
   } // end updateTagList
 } // end Piechart

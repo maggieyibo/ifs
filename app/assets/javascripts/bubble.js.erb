@@ -5,12 +5,13 @@
 * @constructor
 */
 function Bubble () {
-  _this = this;
+  var _this = this;
+
   this.nodes = [];
   this.edges = null;
   this.data = null;
   this.arcs = null;
-  
+
   // set a color scale (look at color brewer for better selections)
   // this.color = d3.scale.ordinal()
   //   .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
@@ -42,7 +43,7 @@ Bubble.prototype.search = function() {
   // send the data to server search action
   queue()
     .defer(d3.json, "/search?authenticity_token=" + AUTH_TOKEN + "&" + qStr)
-    .await(_this.makeBubble); 
+    .await(_this.makeBubble);
 };
 
 // Bubble.makeBubble
@@ -73,7 +74,7 @@ Bubble.prototype.makeBubble = function(error, data) {
   //////////////////
   // force layout //
   //////////////////
-  
+
   var force = d3.layout.force()
                 .nodes(data)
                 .links(links)
@@ -83,7 +84,7 @@ Bubble.prototype.makeBubble = function(error, data) {
                 .gravity(0.3)
                 .start();
 
- 
+
   // add the edges
   _this.edges = _this.svg.selectAll("line")
                 .data(links)
@@ -106,13 +107,13 @@ Bubble.prototype.makeBubble = function(error, data) {
   var arc = d3.svg.arc()
           .innerRadius(innerRadius)
           .outerRadius(outerRadius);
-  
+
   var pie = d3.layout.pie();
-  
+
   // Easy colors accessible via a 10-step ordinal scale
   var color = d3.scale.category20b();
 
-  
+
   // Set up groups
   _this.arcs = _this.svg.selectAll("g.arc")
           .data(pie(dataset))
@@ -120,15 +121,15 @@ Bubble.prototype.makeBubble = function(error, data) {
           .append("g")
           .attr("class", "arc")
           .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
-  
+
   // Draw arc paths
   _this.arcs.append("path")
       .attr("fill", function(d, i) {
         return color(i);
       })
       .attr("d", arc);
-      
-  
+
+
   // Labels
   _this.arcs.append("text")
       .attr("transform", function(d) {
@@ -153,10 +154,10 @@ Bubble.prototype.makeBubble = function(error, data) {
 
                   d3.select('#post-title')
                     .text(d.post_title);
-                  
+
                   d3.select('#post-body')
                     .text(d.post_body);
-                    
+
                 })
                 .call(force.drag);
 
@@ -182,12 +183,12 @@ Bubble.prototype.makeBubble = function(error, data) {
          .attr("y2", function(d) { return d.target.y; });
 
     // nodes
-    _this.nodes.attr('transform', function(d,i) { 
+    _this.nodes.attr('transform', function(d,i) {
       if (i==0) {
         // move the pie chart along with the root node
-        _this.arcs.attr('transform', 'translate(' + d.x + ',' + d.y + ')'); 
+        _this.arcs.attr('transform', 'translate(' + d.x + ',' + d.y + ')');
       }
-      return 'translate(' + d.x + ',' + d.y + ')'; 
+      return 'translate(' + d.x + ',' + d.y + ')';
     });
 
     // text
