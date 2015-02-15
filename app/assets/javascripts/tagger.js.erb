@@ -4,7 +4,7 @@
  * @constructor
  */
 function Tagger () {
-  _this = this;
+  var _this = this;
 
   var svgWidth = 400,
       svgHeight = 54;
@@ -20,46 +20,52 @@ function Tagger () {
   var labelX = 10,
       labelY = 9;
 
+  var delX = 14,
+      delY = sliderY + sliderH/2,
+      delR = 6;
+
+  var maxTags = 9;
+
   // The tags that have been set by the user
   this.tags = [];
 
-  this.addTag = function(tag) {
-    
-    // only allow n tags
-    var allowedTags = 9;
-    if ( this.tags.length >= allowedTags ) {
-      alert("Sorry, you can only search on " + allowedTags + " tags.");
-      return;
-    }
+  this.updateTags = function() {
 
-    // check if tag is already in list
-    for (i=0;i<this.tags.length;i++) {
-      if (tag.id === this.tags[i].id) {
-        alert("You get to search on each tag only once.");
-        return;
-      }
-    }
+    // clear all existing
+    d3.select('#tagger-div').html('');
 
-    var tag = {
-      id: tag.id,
-      name: tag.name,
-      x: sliderX + sliderW / 2,
-      y: sliderY - thumbH / 2 + sliderH / 2,
-      weight: 50
-    };
 
-    this.tags.push(tag);
-
+    // create the d3 drag behavior
     var drag = d3.behavior.drag()
         .origin(function(d) { return d; })
         .on("drag", dragmove);
 
+    // create the svg
     var svg = d3.select('#tagger-div').selectAll('svg')
-        .data(this.tags)
+        .data(_this.tags)
       .enter().append("svg")
         .attr('class', 'tagger-svg')
         .attr("width", svgWidth)
         .attr("height", svgHeight);
+
+    // create the delet button
+    svg.append('circle')
+          .attr('class', 'tagger-delete-button')
+          .attr('fill', '#aa4040')
+          .attr('cx', delX)
+          .attr('cy', delY)
+          .attr('r', delR)
+          .on("mousedown", function(d) {
+            _this.removeTag(d);
+          });
+
+    svg.append('rect')
+          .attr('fill', '#ffffff')
+          .attr('x', delX-3)
+          .attr('y', delY-1.5)
+          .attr('width', delR)
+          .attr('height', delR/2)
+          .attr('rx', 1);
 
     // bar
     svg.append('rect')
@@ -80,7 +86,7 @@ function Tagger () {
 
     // tag label
     svg.append('text')
-          .text(tag.name)
+          .text(function(d) { return d.name; } )
           .attr('class', 'tagger-slider-label')
           .attr('transform', 'translate(' + labelX + ', ' + labelY + ')');
 
@@ -100,8 +106,6 @@ function Tagger () {
           .attr('class', 'tagger-slider-num')
           .attr('transform', 'translate(' + (sliderX + sliderW / 2 - 5) + ', ' + (sliderY + sliderH + thumbH + 4)+ ')');
 
-    piechart.updateTagList();
-
     function dragmove(d) {
       var x = Math.max(sliderX, Math.min(sliderX + sliderW - thumbW, d3.event.x));
       
@@ -118,9 +122,54 @@ function Tagger () {
           .attr('transform', 'translate(' + (x - 5) + ', ' + tY + ')')
           .text( tagWeight );
 
-      tag.weight = tagWeight;
+      d.weight = tagWeight;
       piechart.updateVals();
 
+    }          
+  }; // end updateTags
+
+  this.addTag = function(tag) {
+    
+    // check for too many tags
+    var allowedTags = maxTags;
+    if ( _this.tags.length >= allowedTags ) {
+      alert("Sorry, you can only search on " + allowedTags + " tags.");
+      return;
     }
-  };
+
+    // check if tag is already in list
+    for (i=0;i<_this.tags.length;i++) {
+      if (tag.id === this.tags[i].id) {
+        alert("You get to search on each tag only once. If you're really interested in " +
+          tag.name + " increase it's value on the slider.");
+        return;
+      }
+    }
+
+    var tag = {
+      id: tag.id,
+      name: tag.name,
+      x: sliderX + sliderW / 2,
+      y: sliderY - thumbH / 2 + sliderH / 2,
+      weight: 50
+    };
+
+    _this.tags.push(tag);
+
+    _this.updateTags();
+
+    piechart.updateTagList();
+
+  }; // end addTag
+
+  this.removeTag = function(tag) {
+    
+    // remove item from arry (using jQuery because indexOf doesn't work in ie 9 or below)
+    _this.tags.splice($.inArray(tag, _this.tags), 1);
+
+
+    _this.updateTags();    
+    piechart.updateTagList();
+  }; // end removeTag
+
 }
