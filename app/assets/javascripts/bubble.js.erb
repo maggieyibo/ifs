@@ -32,10 +32,30 @@ function Bubble () {
       return;
     }
 
-    // "tagWeights=1:40,2:10,3:50"
-    var qStr = "tagWeights=";
+    // normalize the tag weights
+
+    // calc the total weight
+    var totalWeight = 0;
     for (var i=0 ; i < tagger.tags.length ; i++ ) {
-      qStr += tagger.tags[i].id + ":" + tagger.tags[i].weight + ",";
+      totalWeight += tagger.tags[i].weight;
+    }
+
+    var normalFactor = 100/totalWeight;
+
+    // create the normalized array
+    var normalizedTags = [];
+    for (var i=0 ; i < tagger.tags.length ; i++ ) {
+      normalizedTags.push({
+        id: tagger.tags[i].id,
+        weight : Math.round(tagger.tags[i].weight * normalFactor)
+      });
+    }
+
+    // create the querry string
+    // in the form: "tagWeights=1:40,2:10,3:50"
+    var qStr = "tagWeights=";
+    for (var i=0 ; i < normalizedTags.length ; i++ ) {
+      qStr += normalizedTags[i].id + ":" + normalizedTags[i].weight + ",";
     }
     qStr = qStr.substring(0, qStr.length - 1);
 
