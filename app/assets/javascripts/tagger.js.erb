@@ -22,7 +22,7 @@ function Tagger () {
 
   var delX = 14,
       delY = sliderY + sliderH/2,
-      delR = 6;
+      delR = 10;
 
   var maxTags = 9;
 
@@ -78,28 +78,34 @@ function Tagger () {
         .attr("height", svgHeight);
 
     // create the delet button
-    svg.append('circle')
-          .attr('class', 'tagger-delete-button')
-          .attr('fill', '#aa4040')
-          .attr('cx', delX)
-          .attr('cy', delY)
-          .attr('r', delR)
-          .attr('cursor', 'pointer')
-          .on("mousedown", function(d) {
-            _this.removeTag(d);
-          });
+    var delG = svg.append('g')
+        .attr('fill', '#a00')
+        .attr('stroke', "#f00")
+        .attr('stroke-width', "10")
+        .attr('cursor', 'pointer')
+        .attr('transform', 'translate(0,13) scale(0.025, 0.025)')
+        .on("mousedown", function(d) {
+          _this.removeTag(d);
+        });
 
-    svg.append('rect')
-          .attr('fill', '#ffffff')
-          .attr('x', delX-3)
-          .attr('y', delY-1.5)
-          .attr('width', delR)
-          .attr('height', delR/2)
-          .attr('rx', 1)
-          .attr('cursor', 'pointer')
-          .on("mousedown", function(d) {
-            _this.removeTag(d);
-          });
+    // circle
+    delG.append('path')
+        .attr('d', "m814.29 606.65a314.29 314.29 0 1 1 -628.57 0 314.29 314.29 0 1 1 628.57 0z")
+        .attr('transform', "matrix(1.1048 0 0 1.1048 -179.21 -162.53)");
+
+    var innerG = delG.append('g')
+        .attr('transform', "matrix(.91837 0 0 .91837 47.587 10.944)")
+        .attr('stroke', "#fff")
+        .attr('stroke-linecap', "round")
+        .attr('stroke-width', "133.87")
+        .attr('fill', "none");
+
+    innerG.append('path')
+        .attr('d', 'm176.51 362.87 356.13 356.13');
+
+    innerG.append('path')
+        .attr('d', 'm532.64 362.87-356.13 356.13');
+
 
     // bar
     svg.append('rect')
