@@ -297,8 +297,15 @@ div {
   display: none;
 }
 
-#post-body, #post-title {
+#post-title {
   padding-left: 40px;
+  font-family: 'Abel', sans-serif;
+}
+
+#post-body {
+  padding-left: 40px;
+  font-family: 'Abel', sans-serif;
+  font-size: 20px;
 }
 
 .bubble-div {
