@@ -51,8 +51,7 @@ function Piechart () {
     if (mode == 'search') {
       // only call search if we're in 'search' mode
       bubble.search();
-      $('#reader').fadeIn('slow');
-
+      $('#reader').animate({left:'10px'}, {queue: false, duration: 1000});
     }
   };
 

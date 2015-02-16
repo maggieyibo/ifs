@@ -50,15 +50,11 @@ function TagList () {
   function handleClick(evt) {
     switch (screenState) {
       case 0:
-        // $('#taglist-fadeout').animate({right:'-280px'}, {queue: false, duration: 500});
-        // $('#taglist-fadeout').animate({right: '200px'}, {duration: 500});
-        $('#taglist-fadeout').fadeOut('slow');
+        $('#taglist-fadeout').animate({left:'1400px'}, {queue: false, duration: 500});
         screenState = 1;
         break;
       case 1:
-        // $('#tagger-fadeout').animate({right: '200px'}, {duration: 500});
-        $('#tagger-fadeout').fadeOut('slow');
-        //$('#tagger-fadeout').removeClass().addClass('animated fadeOutRightBig');
+        $('#tagger-fadeout').animate({left:'1400px'}, {queue: false, duration: 500});
         screenState = 2;
         break;
    }

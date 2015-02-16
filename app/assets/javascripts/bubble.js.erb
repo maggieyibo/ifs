@@ -290,7 +290,7 @@ function Bubble () {
   };
 
   this.closeReader = function() {
-    $('#reader').fadeOut('slow');
+    $('#reader').animate({left:'1600px'}, {queue: false, duration: 1000});
   };
 
 }
