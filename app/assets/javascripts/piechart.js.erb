@@ -106,7 +106,7 @@ function Piechart () {
 
     } else {
 
-      // add the button
+      // add the piechart button
       svg.append('g')
             .attr('class', 'button')
             .attr('cursor', 'pointer')
@@ -115,6 +115,12 @@ function Piechart () {
             .attr('cx', butX)
             .attr('cy', butY)
             .attr('r', butR);
+
+      svg.append('text')
+            .attr('x', width/2)
+            .attr('y', height/2)
+            .attr('class', 'pie-search-text')
+            .text('SEARCH');
 
 
       // create the chart

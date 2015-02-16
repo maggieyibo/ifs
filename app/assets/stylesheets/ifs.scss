@@ -116,7 +116,7 @@ div {
   margin-left: 10%;
   background: #002738;
   // opacity: 0.4;
-  position: fixed; top: 105px; left: 120px; 
+  position: fixed; top: 105px; left: 140px; 
 }
 
 #tagger-fadeout {
@@ -128,7 +128,7 @@ div {
   margin-left: 10%;
   background: #002738;
   // opacity: 0.4;
-  position: fixed; top: 105px; left: 550px; 
+  position: fixed; top: 105px; left: 600px; 
 }
 
 .fadeout-message {
@@ -248,6 +248,12 @@ div {
   user-select: none;
 
 }
+/// pie chart search button ///
+.button {
+  fill: #337ab7;
+  stroke-width: 1;
+  stroke: #797979;
+}
 
 #bubble {
   // background-color: grey;
@@ -291,12 +297,12 @@ div {
 }
 
 .tagger-slider-bar {
-  fill: #00ffff;
+  fill: #337ab7;
 }
 
 .tagger-slider-thumb {
   fill: #ff8000;
-  stroke: #ff3333;
+  stroke: white;
   stroke-width: 2;
 }
 .tagger-slider-thumb:hover {
