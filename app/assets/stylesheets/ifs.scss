@@ -317,10 +317,9 @@ div {
 }
 
 .tag-node {
-  fill: white;
-  stroke: none;
-  opacity: 0;
-
+  fill: none;
+  stroke: white;
+  stroke-width: 2;
 }
 
 .post-node {
