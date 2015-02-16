@@ -56,7 +56,41 @@ function Bubble () {
     }
 
     // clear the bubble
-    d3.select('#bubble-svg').html('');
+    _this.svg.html('');
+
+    //////////////////
+    // close button //
+    //////////////////
+
+    var delG = _this.svg.append('g')
+        .attr('fill', '#a00')
+        .attr('stroke', "#f00")
+        .attr('stroke-width', "10")
+        .attr('cursor', 'pointer')
+        .attr('transform', 'translate(650,0) scale(0.025, 0.025)')
+        .on("mousedown", function(d) {
+          _this.closeReader();
+        });
+
+    // circle
+    delG.append('path')
+        .attr('d', "m814.29 606.65a314.29 314.29 0 1 1 -628.57 0 314.29 314.29 0 1 1 628.57 0z")
+        .attr('transform', "matrix(1.1048 0 0 1.1048 -179.21 -162.53)");
+
+    var innerG = delG.append('g')
+        .attr('transform', "matrix(.91837 0 0 .91837 47.587 10.944)")
+        .attr('stroke', "#fff")
+        .attr('stroke-linecap', "round")
+        .attr('stroke-width', "133.87")
+        .attr('fill', "none");
+
+    innerG.append('path')
+        .attr('d', 'm176.51 362.87 356.13 356.13');
+
+    innerG.append('path')
+        .attr('d', 'm532.64 362.87-356.13 356.13');
+
+
 
     var tagNodeRadius = 80;
 
@@ -196,6 +230,10 @@ function Bubble () {
       //     });
 
     });
+  };
+
+  this.closeReader = function() {
+    $('#reader').fadeOut('slow');
   };
 
 }
