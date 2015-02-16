@@ -176,7 +176,9 @@ function Tagger () {
         tagWeight = 1;
 
       d.weight = tagWeight;
-      piechart.updateVals();
+
+      if (mode == 'search')
+        piechart.updateVals();
 
       d3.select(this).select('text').text(tagWeight);
       _this.updateTagString();
@@ -219,7 +221,8 @@ function Tagger () {
 
     _this.updateTags();
 
-    piechart.updateTagList();
+    if (mode == 'search')
+      piechart.updateTagList();
 
   }; // end addTag
 
