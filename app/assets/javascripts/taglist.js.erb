@@ -49,12 +49,16 @@ function TagList () {
 
   function handleClick(evt) {
     switch (screenState) {
-      case 0: 
-        $('#taglist-fadeout').removeClass().addClass('animated fadeOutRightBig');
+      case 0:
+        // $('#taglist-fadeout').animate({right:'-280px'}, {queue: false, duration: 500});
+        // $('#taglist-fadeout').animate({right: '200px'}, {duration: 500});
+        $('#taglist-fadeout').fadeOut('slow');
         screenState = 1;
         break;
       case 1:
-        $('#tagger-fadeout').removeClass().addClass('animated fadeOutRightBig');
+        // $('#tagger-fadeout').animate({right: '200px'}, {duration: 500});
+        $('#tagger-fadeout').fadeOut('slow');
+        //$('#tagger-fadeout').removeClass().addClass('animated fadeOutRightBig');
         screenState = 2;
         break;
    }

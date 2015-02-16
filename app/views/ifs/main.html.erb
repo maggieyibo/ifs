@@ -6,18 +6,18 @@
       <span class="logo">FOR • U • ME</span>
       <a href="posts/new" id="newpost"><i class='glyphicon glyphicon-pencil'></i></a>
           <!-- <div id="openModal" class="loginDialog">
-          
+
         </div> -->
       </div>
       <div class="pure-u-1-24 container-div">
-      </div> 
+      </div>
 
       <div class="pure-u-4-24 container-div">
         <br>
         <label id="box-text">CHOOSE YOUR TAGS</label><br><br>
         <div id="tag-list">
         </div>
-      </div> 
+      </div>
 
       <div class="pure-u-7-24 container-div">
         <label id="selection-text">YOUR SELECTIONS</label><br><br>
@@ -30,52 +30,46 @@
         </div>
       </div>
 
-      <div class="pure-u-12-24 container-div">
+      <div id="reader">
 
-
-        <svg id="bubble-svg" height="590" width="700"></svg>
-      </div>
-
-      <div class="pure-u-12-24 container-div">
-        <div id="post-view">
-          <div id="post-title"></div>
-          <div id="post-body"></div>
+        <div class="pure-u-12-24 container-div">
+          <div id="post-view">
+            <div id="post-title"></div>
+            <div id="post-body"></div>
+          </div>
         </div>
+
+        <div class="pure-u-12-24 container-div">
+          <svg id="bubble-svg" height="590" width="700"></svg>
+        </div>
+
       </div>
 
       <div class="pure-u-20-24" "container-div">
-
-        <div class= "animated" "fadeOutRightBig">
-          <div id="tagger-fadeout">
-            <div class="fadeout-message">
-              <!-- <h3>Enjoy Your FOR•U•ME Experience</h3> -->
-              <h3>Use the Sliders to Adjust <br> Importance of Each Tag</h3>
-              <h6>You can add up to 9 tags</h6>
-              <div class="arrow-1"></div>
-            </div>
+        <div id="tagger-fadeout">
+          <div class="fadeout-message">
+            <h3>Use the Sliders to Adjust <br> Importance of Each Tag</h3>
+            <h6>You can add up to 9 tags</h6>
+            <div class="arrow-1"></div>
           </div>
         </div>
 
 
-        <div class= "animated" "fadeOutRightBig">
-          <div id="taglist-fadeout">
-            <div class="fadeout-message">
-              <!-- <h3>Enjoy Your FOR•U•ME Experience</h3> -->
-              <h3>What Would You Like to Read About Today?</h3>
-              <h3>Choose Your Tags to Begin</h3>
-              <div class="arrow-1"></div>
-            </div>
+        <div id="taglist-fadeout">
+          <div class="fadeout-message">
+            <h3>What Would You Like to Read About Today?</h3>
+            <h3>Choose Your Tags to Begin</h3>
+            <div class="arrow-1"></div>
           </div>
         </div>
 
-        
-      </div>      
+      </div>
 
 
-    </div> 
+    </div>
 
 
-    <script>
+<script>
   // set the authenticity token
   var AUTH_TOKEN = '<%= "#{form_authenticity_token.inspect}" %>';
 </script>
