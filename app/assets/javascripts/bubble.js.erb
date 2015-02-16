@@ -12,10 +12,9 @@ function Bubble () {
   this.data = null;
   this.arcs = null;
 
-  // set a color scale (look at color brewer for better selections)
-  // this.color = d3.scale.ordinal()
-  //   .range(["#cccccc", "#969696", "#636363", "#252525", "#181818", "#000000"])
-  //   .domain([0,1,2,3,4,5]);
+  // colors
+  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e",
+                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538"];
 
   // get the bubble svg from the page
   this.svg = d3.select('#bubble-svg');
@@ -28,7 +27,7 @@ function Bubble () {
   this.search = function() {
 
     if (tagger.tags.length < 1) {
-      console.warn("Must set some tags before searching!");
+      alert("Please add some tags before searching.");
       return;
     }
 
@@ -78,6 +77,24 @@ function Bubble () {
     // clear the bubble
     _this.svg.html('');
 
+
+    //////////
+    // data //
+    //////////
+
+    var tagNodeRadius = 80;
+
+    // add the tagger (search weights) as the root node
+    data.unshift({0:0});
+    data[0].weight = 10000;
+
+    // create links from search to the nodes
+    var links = [];
+    for (i=0;i<data.length-1;i++) {
+      links[i] = {"source": 0, "target": i+1 };
+    }
+
+
     //////////////////
     // close button //
     //////////////////
@@ -111,19 +128,6 @@ function Bubble () {
         .attr('d', 'm532.64 362.87-356.13 356.13');
 
 
-
-    var tagNodeRadius = 80;
-
-    // add the tagger (search weights) as the root node
-    data.unshift({0:0});
-    data[0].weight = 10000;
-
-    // create links from search to the nodes
-    var links = [];
-    for (i=0;i<data.length-1;i++) {
-      links[i] = {"source": 0, "target": i+1 };
-    }
-
     //////////////////
     // force layout //
     //////////////////
@@ -149,6 +153,11 @@ function Bubble () {
     ///////////////
     // pie chart //
     ///////////////
+
+
+    // console.log(piechart.pie.element);
+
+    // _this.svg.append(piechart.pie.element);
 
     var dataset = [];
     for (var i = 0 ; i < tagger.tags.length ; i++) {
@@ -189,6 +198,7 @@ function Bubble () {
           return "translate(" + arc.centroid(d) + ")";
         })
         .attr("text-anchor", "middle")
+        .attr('fill', 'white')
         .text(function(d,i) {
           return tagger.tags[i].name;
         });
@@ -197,12 +207,20 @@ function Bubble () {
     ///////////
     // nodes //
     ///////////
+
     _this.nodes = _this.svg.selectAll("circle")
                   .data(data)
                 .enter()
                   .append("circle")
                   .attr('class', function (d,i) {return i==0 ? 'tag-node' : 'post-node'} )
                   .attr("r", function (d,i) { return i==0 ? tagNodeRadius : 10+d.score/100} )
+                  .attr('fill',function (d,i) {
+                    if (i > 0) {
+                      return colors[Math.floor(Math.random() * 10)];
+                    } else {
+                      return null;
+                    }
+                  })
                   .on("mouseover", function(d) {
 
                     d3.select('#post-title')
@@ -217,12 +235,29 @@ function Bubble () {
     //////////
     // text //
     //////////
+    var labels = _this.svg.selectAll("text")
+                  .data(data)
+                  .enter()
+                  .append("g");
 
-    // var labels = _this.svg.selectAll("text")
-    //               .data(data)
-    //               .enter()
-    //               .append("text")
-    //               .text(function(d) { return d.post_title; });
+
+    labels.append("text")
+      .each(function (d) {
+
+        var arr = d.post_title.split(" ");
+
+        if (arr != undefined) {
+            for (i = 0; i < arr.length; i++) {
+                d3.select(this).append("tspan")
+                    .text(arr[i])
+                    .attr("dy", i ? "1.2em" : 0)
+                    .attr("x", 0)
+                    .attr("text-anchor", "middle")
+                    .attr('fill', 'white');
+            }
+        }
+      });
+
 
     //////////
     // tick //
@@ -245,9 +280,9 @@ function Bubble () {
       });
 
       // text
-      // labels.attr("transform", function(d) {
-      //         return "translate(" + d.x + "," + d.y + ")";
-      //     });
+      labels.attr("transform", function(d) {
+              return "translate(" + d.x + "," + d.y + ")";
+          });
 
     });
   };

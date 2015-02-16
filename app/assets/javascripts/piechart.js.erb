@@ -9,7 +9,10 @@ function Piechart () {
   var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e",
                   "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538"
   ];
-  var pie = null;
+
+  // expose the piechart for use in the bubble
+  this.pie = null;
+
   var width = 590,
       height = 600;
   var butX = width/2,
@@ -17,7 +20,7 @@ function Piechart () {
       butR = 80;
 
   // create the svg to draw in
-  var svg = d3.select('#pie-chart')
+  this.svg = d3.select('#pie-chart')
       .append('svg')
         .attr('width', width)
         .attr('height', height)
@@ -61,10 +64,10 @@ function Piechart () {
    */
   this.updateVals = function() {
     var data = setData();
-    pie.updateProp("effects.load.effect", "none");
-    pie.updateProp("data.content", data);
+    _this.pie.updateProp("effects.load.effect", "none");
+    _this.pie.updateProp("data.content", data);
 
-    svg.append('g')
+    _this.svg.append('g')
             .attr('class', 'button')
             .attr('cursor', 'pointer')
           .append('circle')
@@ -89,15 +92,15 @@ function Piechart () {
     var data = setData();
 
     // if we have already made the pie chart
-    if (pie) {
+    if (_this.pie) {
 
       // switch to animation mode
-      pie.updateProp("effects.load.effect", "default");
+      _this.pie.updateProp("effects.load.effect", "default");
 
       // update the data
-      pie.updateProp("data.content", data);
+      _this.pie.updateProp("data.content", data);
 
-      svg.append('g')
+      _this.svg.append('g')
             .attr('class', 'button')
             .attr('cursor', 'pointer')
           .append('circle')
@@ -105,28 +108,18 @@ function Piechart () {
             .attr('cx', butX)
             .attr('cy', butY)
             .attr('r', butR);
+
+      _this.svg.append('text')
+            .attr('x', width/2-24)
+            .attr('y', height/2-40)
+            .attr('class', 'pie-search-text')
+            .attr('fill', 'white')
+            .text('Search');
 
     } else {
 
-      // add the piechart button
-      svg.append('g')
-            .attr('class', 'button')
-            .attr('cursor', 'pointer')
-          .append('circle')
-            .on('click',handleClick)
-            .attr('cx', butX)
-            .attr('cy', butY)
-            .attr('r', butR);
-
-      svg.append('text')
-            .attr('x', width/2)
-            .attr('y', height/2)
-            .attr('class', 'pie-search-text')
-            .text('SEARCH');
-
-
       // create the chart
-      pie = new d3pie("#pie-svg", {
+      _this.pie = new d3pie("#pie-svg", {
         "size": {
           "canvasWidth": width,
           "pieInnerRadius": "66%",
