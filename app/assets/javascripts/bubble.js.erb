@@ -173,7 +173,7 @@ function Bubble () {
     var pie = d3.layout.pie();
 
     // Easy colors accessible via a 10-step ordinal scale
-    var color = d3.scale.category20b();
+    // var color = d3.scale.category20b();
 
 
     // Set up groups
@@ -187,7 +187,7 @@ function Bubble () {
     // Draw arc paths
     _this.arcs.append("path")
         .attr("fill", function(d, i) {
-          return color(i);
+          return colors[i];
         })
         .attr("d", arc);
 
