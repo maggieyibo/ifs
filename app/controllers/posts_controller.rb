@@ -17,12 +17,12 @@ class PostsController < ApplicationController
 
 	def create
 
-    # create a new blank post 
+    # create a new blank post
 	  post = Post.new(title: post_params[:title], body: post_params[:body])
 
     # saves a post
     if post.save
-      
+
       # create empty arrays
       tag_weights = []
       tag_ids = []
@@ -59,9 +59,9 @@ class PostsController < ApplicationController
         ptw.save
 
       end
-      
+
       # go to the posts path page once done
-      redirect_to posts_path
+      redirect_to main_path
 
     else
         render :new
