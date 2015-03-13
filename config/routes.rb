@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   root to: "ifs#main", as: 'main'
 
   resources :users
-  resources :posts
+
+  resources :posts do
+    resources :comments
+  end
+  
   resources :tags
-  resources :comments
+  
 
   get 'search' => 'ifs#search'
   get '/signup' => 'users#new'
