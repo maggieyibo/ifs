@@ -6,8 +6,8 @@
 function Piechart () {
   var _this = this;
 
-  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e",
-                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538"
+  var colors = [  "#DFE8F3", "#C0D2E7", "#A0BCDB", "#81A6CF", "#6290C3",
+                  "#4E739C", "#3A5675", "#27394E", "#6290C3", "#E5ECF5"
   ];
 
   // expose the piechart for use in the bubble
@@ -112,8 +112,8 @@ function Piechart () {
             .attr('x', width/2-24)
             .attr('y', height/2-40)
             .attr('class', 'pie-search-text')
-            .attr('fill', 'white')
-            .text('Search');
+            .attr('fill', 'black')
+            .text('search');
 
     } else {
 
@@ -136,20 +136,21 @@ function Piechart () {
             "hideWhenLessThanPercentage": 3
           },
           "mainLabel": {
-            "color": "#e6e6e6",
-            "fontSize": 11
+            "color": "#ff8000",
+            "fontSize": 14
           },
           "percentage": {
-            "color": "#d2d2d2",
+            "color": "black",
+            "fontSize": 13,
             "decimalPlaces": 0
           },
           "value": {
             "color": "#797979",
-            "fontSize": 11
+            "fontSize": 14
           },
           "lines": {
             "enabled": true,
-            "color": "#ffffff"
+            "color": "#000"
           }
         },
         effects: {
@@ -164,7 +165,7 @@ function Piechart () {
         },
         "misc": {
           "colors": {
-            "segmentStroke": "#747474"
+            "segmentStroke": "#000"
           },
           "gradient": {
             "enabled": true,

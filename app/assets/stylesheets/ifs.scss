@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  background-color: white;
 
   // make text in pie chart unselectable
   -webkit-user-select: none;  /* Chrome all / Safari all */
@@ -10,9 +11,20 @@ html, body {
 /// styling for main landing page ///
 
 #main {
-  background-color: #002738;
+  margin-top: 20px;
 }
 
+h1 {
+  padding-top: 30px;
+  font-size: 40px !important;
+  text-align: center !important;
+  color: tomato !important;
+  font-family: avenir !important;
+  font-weight: 700 !important;
+  font-size: 50px;
+  
+
+}
 // pure css for grid testing
 div {
   // border: 1px solid #f9daa4;
@@ -22,29 +34,34 @@ div {
 ////header style////
 #header {
   text-align: center;
-  font-family: 'Righteous', cursive;
+  font-family: 'Candal', sans-serif;
   font-size: 40px;
   padding: 15px;
-  color: white;
-  background-color: #002738;
+  color: black;
+  background-color: white;
   height: 70px;
+
 }
 
 /// FOR•U•ME ///
 .logo {
-  margin-right: 200px;
+  // margin-right: 200px;
   font-size: 50px;
   font-family: 'Monoton', cursive;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
-  user-select: none;
 }
 /// navigation bar ///
 #login {
   float: left;
-  font-size: 20px;
+  margin-left: 40px;
+  margin-top: 20px;
+  font-size: 19px;
+  font-family: avenir;
+  color: #337ab7;
+  font-weight: 700;
   text-decoration: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -55,7 +72,11 @@ div {
 
 #signup {
   float: left;
-  font-size: 20px;
+  margin-top: 20px;
+  font-size: 19px;
+  font-family: avenir;
+  color:#337ab7;
+  font-weight: 700;
   text-decoration: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -67,7 +88,14 @@ div {
 
 #newpost {
   float: right;
-  font-size: 20px;
+  margin-right: 35px;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #337ab7;
+  text-decoration: none;
+  font-family: avenir;
+  text-transform: uppercase;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
@@ -79,9 +107,9 @@ div {
 .container-div {
   height: 707px;
   padding-top: 30px;
-  font-family: 'Karla', sans-serif;
+  font-family: avenir;
   font-size: 14px;
-  color: white;
+  color: black;
   // overflow: auto;
 
 }
@@ -91,14 +119,14 @@ div {
 //// left-arrow ////
 .arrow-1 {
   position: relative;
-  margin-left: 30px;
+  margin-left: 25px;
   margin-right: auto;
-  top: -100px;
+  top: -150px;
   width: 0;
   height: 0;
-  border-top: 30px solid transparent;
-  border-bottom: 30px solid transparent;
-  border-right: 20px solid #FFF;
+  border-top: 25px solid transparent;
+  border-bottom: 25px solid transparent;
+  border-right: 15px solid #ff8000;
 }
 //// arrow stem(currently not using) ////
 // .arrow-1:after {
@@ -118,11 +146,12 @@ div {
   height: 600px;
   width: 1180px;
   border-radius: 10px;
-  border: solid 2px white;
+  border: solid 3px black;
   margin-left: 10%;
-  background: #002738;
+  background: #337ab7;
+  // background: #FFA64C;
   position: absolute;
-  top: 105px;
+  top: 170px;
   left: 140px;
 }
 
@@ -131,31 +160,36 @@ div {
   height: 600px;
   width: 800px;
   border-radius: 10px;
-  border: solid 2px white;
+  border: solid 3px black;
   margin-left: 10%;
-  background: #002738;
-  position: fixed; top: 105px; left: 600px;
+  background: #337ab7;
+  position: fixed; top: 170px; left: 600px;
 }
 
 .fadeout-message {
   padding-top: 170px;
   text-align: center;
-  font-family: 'Righteous', cursive;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
   font-size: 30px;
+  font-weight: 700;
   color: white;
+  // color: #337ab7;
   opacity: 1.0;
 }
 
 
 /// style for tag list ///
 #tag-list {
-  // background-color: grey;
+
   height: 480px;
   text-align: left;
+  text-transform: uppercase;
+  font-weight: 700;
   padding-left: 40px;
   font-family: 'Karla', sans-serif;
-  font-size: 14px;
-  color: white;
+  font-size: 15px;
+  color: #000;
   overflow: auto;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -212,9 +246,9 @@ div {
 }
 /// pie chart search button ///
 .button {
-  fill: #337ab7;
-  stroke-width: 1;
-  stroke: #797979;
+  fill: #ff8000;
+  stroke-width: 2;
+  stroke: #000;
 }
 
 #bubble {
@@ -260,11 +294,13 @@ div {
 
 .tagger-slider-bar {
   fill: #337ab7;
+  stroke: black;
+  stroke-width: 2;
 }
 
 .tagger-slider-thumb {
   fill: #ff8000;
-  stroke: white;
+  stroke: black;
   stroke-width: 2;
 }
 .tagger-slider-thumb:hover {
@@ -274,11 +310,11 @@ div {
 
 //label of tagger-slider//
 .tagger-slider-label {
-  fill: white;
+  fill: black;
 }
 //num on slider//
 .tagger-slider-num {
-  fill: white;
+  fill: black;
 
 }
 //each of the tag bar//
@@ -294,14 +330,16 @@ div {
   height: 800px;
   width: 1440px;
   border-radius: 10px;
-  border: solid 2px white;
-  background: #002738;
+  border: solid 2px grey;
+  background: white;
   position: fixed; top: 105px; left: 1600px;
 }
 
 #post-title {
   padding-left: 40px;
   font-family: 'Abel', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
 }
 
 #post-body {
@@ -320,25 +358,25 @@ div {
 
 .tag-node {
   fill: none;
-  stroke: white;
+  stroke: black;
   stroke-width: 2;
 }
 
 .post-node {
   // fill: #333333;
-  stroke:#ff8000;
+  stroke:black;
   stroke-width: 2;
 }
 
 .post-node:hover {
-  stroke:red;
-  stroke-width: 4;
+  stroke:#ff8000;
+  stroke-width: 2;
   transition: stroke, .3s;
 }
 
 // line from center to a post
 .post-line {
-  stroke: #888888;
+  stroke: black;
   stroke-width: 2;
 }
 
@@ -356,13 +394,13 @@ div {
   vertical-align: top;
   border-style: solid;
   border-width: 3px;
-  border-color: orange;
+  border-color: black;
   transition: border-color, .3s;
 
 }
 
 .viewer-container:hover {
-  border-color: red;
+  border-color: #ff8000;
 
 }
 div.bar {
@@ -402,22 +440,16 @@ div.bar {
 
 #newpost-text {
   color: #ff8000;
+  font-weight: 500;
 }
 
 ////////////////NEW POST PAGE//////////////////
 
-h1 {
-  text-align: center;
-  font-family: 'Karla', sans-serif;
-  font-size: 50px;
-
-}
-
 .new-post {
-  background-color: #002738;
-  color: white;
+  background-color: white;
+  color: black;
   text-align: center;
-  font-family: 'Karla', sans-serif;
+  font-family: avenir;
 }
 
 ///// modal for login/signup notification ///
@@ -425,7 +457,7 @@ h1 {
 
 .loginDialog {
     position: fixed;
-    font-family: 'Karla', sans-serif;
+    font-family: avenir;
     color: tomato;
     top: 0;
     right: 0;
@@ -478,6 +510,9 @@ h1 {
     background: #00d9ff;
 }
 
+.form-group {
+  text-align: center;
+}
 
 
 

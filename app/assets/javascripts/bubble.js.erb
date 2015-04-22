@@ -13,8 +13,8 @@ function Bubble () {
   this.arcs = null;
 
   // colors
-  var colors = [  "#7e3838", "#7a387e", "#4d387e", "#38507e", "#386a7e",
-                  "#387e6a", "#387e45", "#587e38", "#7c7e38", "#7e6538"
+  var colors = [  "#DFE8F3", "#C0D2E7", "#A0BCDB", "#81A6CF", "#6290C3",
+                  "#4E739C", "#3A5675", "#27394E", "#6290C3", "#E5ECF5"
   ];
   // get the bubble svg from the page
   this.svg = d3.select('#bubble-svg');
@@ -198,7 +198,7 @@ function Bubble () {
           return "translate(" + arc.centroid(d) + ")";
         })
         .attr("text-anchor", "middle")
-        .attr('fill', 'white')
+        .attr('fill', 'black')
         .text(function(d,i) {
           return tagger.tags[i].name;
         });
@@ -254,7 +254,7 @@ function Bubble () {
                   .attr("dy", i ? "1.2em" : 0)
                   .attr("x", 0)
                   .attr("text-anchor", "middle")
-                  .attr('fill', 'white');
+                  .attr('fill', 'black');
             }
           }
         }
