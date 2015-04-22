@@ -2,11 +2,11 @@
 
 	<h1>New Post</h1>
 
-	<div class="pure-u-7-24">
+	<div class="pure-u-7-24 container-div">
 
-		<%= form_for @post do |f| %> <br><br>
-		<label id="newpost-text"> Add A Post:</label> <br>
-		<%= f.text_field :title, class: "form-control", placeholder: "Post Title" %> <br><br>
+		<%= form_for @post do |f| %><br>
+		<label id="newpost-text" style="font-weight: 600;"> ADD A POST:</label> <br><br>
+		<%= f.text_field :title, class: "form-control", placeholder: "Post Title" %> <br>
 		<%= f.text_area :body, size: '50x20', class: "form-control", placeholder: "Your Post Here..." %><br>
 		<%= f.hidden_field :tag_weights, value: '' %><br>
 		<%= f.submit 'Create Post', class: "btn btn-success" %>
